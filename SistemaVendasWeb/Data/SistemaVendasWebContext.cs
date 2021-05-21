@@ -14,6 +14,9 @@ namespace SistemaVendasWeb.Data
         {
         }
 
-        public DbSet<SistemaVendasWeb.Models.ClasseTeste> ClasseTeste { get; set; }
+        public DbSet<ClasseTeste> ClasseTeste { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
+        public DbSet<Status> Status { get; set; }
     }
 }

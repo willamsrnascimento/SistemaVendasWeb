@@ -14,6 +14,7 @@ namespace SistemaVendasWeb.Repository
         char Sexo { get; set; }
         string Login { get; set; }
         string Senha { get; set; }
+        Endereco Endereco { get; set; }
         DateTime DataNascimento { get; set; }
         DateTime DataInclusao { get; set; }
         DateTime DataExclusao { get; set; }

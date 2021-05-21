@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SistemaVendasWeb.Repository
 {
@@ -9,9 +6,9 @@ namespace SistemaVendasWeb.Repository
     {
         long Id { get; }
         void Incluir();
-        T Alterar(T t);
+        T Alterar();
         void Excluir();
-        List<T> Listar();
+        ICollection<T> Listar();
         T SelecionarPorIr(int id);
     }
 }
