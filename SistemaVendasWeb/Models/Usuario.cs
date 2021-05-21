@@ -29,8 +29,9 @@ namespace SistemaVendasWeb.Models
         {
 
         }
-        public Usuario(string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
+        public Usuario(long id, string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
         {
+            Id = id;
             Nome = nome;
             Email = email;
             CPF = cpf;

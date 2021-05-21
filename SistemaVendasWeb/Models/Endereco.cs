@@ -20,14 +20,15 @@ namespace SistemaVendasWeb.Models
 
         }
 
-        public Endereco(string rua, int numero, string complemento, string cEP, string bairro, string cidade)
+        public Endereco(long id, string rua, int numero, string complemento, string cEP, string bairro, string cidade)
         {
+            Id = id;
             Rua = rua;
             Numero = numero;
             Complemento = complemento;
             CEP = cEP;
-            Bairro = bairro;
-            Cidade = cidade;
+            Bairro = bairro; 
+            Cidade = cidade;          
         }
     }
 }

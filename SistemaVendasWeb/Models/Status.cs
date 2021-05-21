@@ -14,5 +14,17 @@ namespace SistemaVendasWeb.Models
         public DateTime DataAlteracao { get; set; }
         public DateTime DataExclusao { get; set; }
 
+        public Status()
+        {
+        }
+        public Status(long id, char abreviacao, string descricao, DateTime dataInclusao, DateTime dataAlteracao, DateTime dataExclusao)
+        {
+            Id = id;
+            Abreviacao = abreviacao;
+            Descricao = descricao;
+            DataInclusao = dataInclusao;
+            DataAlteracao = dataAlteracao;
+            DataExclusao = dataExclusao;
+        }
     }
 }
