@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using SistemaVendasWeb.Data;
+using SistemaVendasWeb.Services;
 
 namespace SistemaVendasWeb
 {
@@ -41,6 +42,7 @@ namespace SistemaVendasWeb
             //options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasWebContext")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<FuncionariosService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

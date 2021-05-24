@@ -1,0 +1,117 @@
+﻿@model IEnumerable<SistemaVendasWeb.Models.Funcionario>
+
+@{ 
+    ViewData["Title"] = "Funcionários";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p>Página Index de Funcionários</p>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr class="success">
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CPF)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RG)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrgaoExpedidor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sexo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumCarteiraTrabalho)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco.Bairro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco.Numero)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Funcionario funcionario in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Nome)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Email)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.CPF)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Telefone)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.RG)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.OrgaoExpedidor)
+            </td>
+            @if (funcionario.Sexo == 'M')
+            {
+                <td>
+                    Masculino
+                </td>
+            }
+            else
+            {
+                <td>
+                    Feminino
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.NumCarteiraTrabalho)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Status.Descricao)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Endereco.Bairro)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Endereco.Cidade)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Endereco.Numero)
+            </td>
+            <td>
+                <a asp-action="Editar" asp-route-id="@funcionario.Id">Editar</a>
+                <a asp-action="Detalhes" asp-route-id="@funcionario.Id">Detalhes</a>
+                <a asp-action="Excluir" asp-route-id="@funcionario.Id">Excluir</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table> 
