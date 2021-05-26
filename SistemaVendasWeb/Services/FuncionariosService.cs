@@ -20,5 +20,10 @@ namespace SistemaVendasWeb.Services
         {
             return _context.Funcionarios.ToList();
         }
+        public void AdicionarFuncionario(Funcionario funcionario)
+        {
+            _context.Add(funcionario);
+            _context.SaveChanges();
+        }
     }
 }

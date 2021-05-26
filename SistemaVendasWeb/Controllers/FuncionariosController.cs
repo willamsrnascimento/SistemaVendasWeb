@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaVendasWeb.Services;
+using SistemaVendasWeb.Models;
 
 namespace SistemaVendasWeb.Controllers
 {
@@ -20,5 +21,17 @@ namespace SistemaVendasWeb.Controllers
             IEnumerable list = _funcionariosService.BuscaTodos();
             return View(list);
         }
+        public IActionResult NovoFuncionario()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult NovoFuncionario(Funcionario funcinario)
+        {
+            _funcionariosService.AdicionarFuncionario(funcinario);
+            return RedirectToAction(nameof(Index));
+        }    
     }
 }

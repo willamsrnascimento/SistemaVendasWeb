@@ -1,0 +1,57 @@
+﻿@model SistemaVendasWeb.Models.Funcionario;
+
+<h2>Funcionários</h2>
+
+<p>Cadastras Funcionários</p>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="NovoFuncionario" method="post">
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefone" class="control-label"></label>
+                <input asp-for="Telefone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="RG" class="control-label"></label>
+                <input asp-for="RG" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="OrgaoExpedidor" class="control-label"></label>
+                <input asp-for="OrgaoExpedidor" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumCarteiraTrabalho" class="control-label"></label>
+                <input asp-for="NumCarteiraTrabalho" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="DataNascimento" class="control-label"></label>
+                <input asp-for="DataNascimento" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Sexo" class="control-label"></label>
+                <select asp-for="Sexo" class="form-control" id="select">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Novo Funcionário" class="btn btn-default" />
+            </div>
+
+        </form>
+    </div>
+</div>
