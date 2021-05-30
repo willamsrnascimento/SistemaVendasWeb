@@ -19,6 +19,7 @@ namespace SistemaVendasWeb.Models
         public string Login { get; set; }
         public string Senha { get; set; }
         public Endereco Endereco { get; set; }
+        public long EnderecoId { get; set; }
         public Status Status { get; set; }
         public DateTime DataNascimento { get; set; }
         public DateTime DataInclusao { get; set; }

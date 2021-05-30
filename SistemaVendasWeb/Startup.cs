@@ -43,6 +43,7 @@ namespace SistemaVendasWeb
 
             services.AddScoped<SeedingService>();
             services.AddScoped<FuncionariosService>();
+            services.AddScoped<EnderecoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

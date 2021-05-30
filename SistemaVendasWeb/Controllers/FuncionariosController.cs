@@ -12,26 +12,29 @@ namespace SistemaVendasWeb.Controllers
     public class FuncionariosController : Controller
     {
         private readonly FuncionariosService _funcionariosService;
+  
         public FuncionariosController(FuncionariosService funcionariosService)
         {
             _funcionariosService = funcionariosService;
+           
         }
         public IActionResult Index()
         {
             IEnumerable list = _funcionariosService.BuscaTodos();
             return View(list);
         }
-        public IActionResult NovoFuncionario()
+        public IActionResult Criar()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult NovoFuncionario(Funcionario funcinario)
+        public IActionResult Criar(Funcionario funcinario)
         {
+            funcinario.Endereco = new Endereco();
             _funcionariosService.AdicionarFuncionario(funcinario);
-            return RedirectToAction(nameof(Index));
-        }    
+            return RedirectToAction("Atualizar", "Endereco", funcinario.Endereco) ; 
+        }
     }
 }
