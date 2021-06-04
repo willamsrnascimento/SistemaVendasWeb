@@ -7,7 +7,7 @@ namespace SistemaVendasWeb.Models
 {
     public class Status
     {
-        public long Id { get; private set; }
+        public long Id { get; set; }
         public char Abreviacao { get; set; }
         public string Descricao { get; set; }
         public DateTime DataInclusao { get; set; }

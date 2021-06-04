@@ -1,0 +1,61 @@
+﻿@model SistemaVendasWeb.Models.ViewModels.FuncionarioViewModel;
+
+<h2>Funcionários</h2>
+
+<p>Cadastro de Funcionários</p>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Criar">
+            <div class="form-group">
+                <label asp-for="Funcionario.Nome" class="control-label"></label>
+                <input asp-for="Funcionario.Nome" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.Email" class="control-label"></label>
+                <input asp-for="Funcionario.Email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.Telefone" class="control-label"></label>
+                <input asp-for="Funcionario.Telefone" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.RG" class="control-label"></label>
+                <input asp-for="Funcionario.RG" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.OrgaoExpedidor" class="control-label"></label>
+                <input asp-for="Funcionario.OrgaoExpedidor" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.CPF" class="control-label"></label>
+                <input asp-for="Funcionario.CPF" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.NumCarteiraTrabalho" class="control-label"></label>
+                <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.DataNascimento" class="control-label"></label>
+                <input asp-for="Funcionario.DataNascimento" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.Sexo" class="control-label"></label>
+                <select asp-for="Funcionario.Sexo" class="form-control" id="select">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Funcionario.StatusId" class="control-label"></label>
+                <select asp-for="Funcionario.StatusId" asp-items="@(new SelectList(Model.Statuses, "Id", "Descricao"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Próximo ..." class="btn btn-default" />
+            </div>
+
+        </form>
+    </div>
+</div>

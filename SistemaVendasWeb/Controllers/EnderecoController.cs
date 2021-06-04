@@ -65,7 +65,7 @@ namespace SistemaVendasWeb.Controllers
                 throw new DBUpdateConcurrencyException(e.Message);
             }
             
-            return RedirectToAction("Index", "Funcionarios");
+            return RedirectToAction("Index", "Funcionario");
         }
     }
 }

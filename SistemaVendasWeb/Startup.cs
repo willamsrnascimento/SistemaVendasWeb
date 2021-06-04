@@ -42,8 +42,9 @@ namespace SistemaVendasWeb
             //options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasWebContext")));
 
             services.AddScoped<SeedingService>();
-            services.AddScoped<FuncionariosService>();
+            services.AddScoped<FuncionarioService>();
             services.AddScoped<EnderecoService>();
+            services.AddScoped<StatusService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -2,13 +2,12 @@
 
 namespace SistemaVendasWeb.Repository
 {
-    interface IBasico <T>
+    public interface IBasico<T>
     {
-        long Id { get; }
-        void Incluir();
-        T Alterar();
-        void Excluir();
-        ICollection<T> Listar();
-        T SelecionarPorIr(int id);
+        void Criar(T t);
+        void Atualizar(T t);
+        void Excluir(long id);
+        ICollection<T> BuscarTodos();
+        T BuscarPorId(long id);
     }
 }

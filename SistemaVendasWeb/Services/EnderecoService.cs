@@ -2,11 +2,12 @@
 using SistemaVendasWeb.Models;
 using System.Linq;
 using SistemaVendasWeb.Services.Exception;
-
+using SistemaVendasWeb.Repository;
+using System.Collections.Generic;
 
 namespace SistemaVendasWeb.Services
 {
-    public class EnderecoService 
+    public class EnderecoService : IBasico<Endereco>
     {
         private readonly SistemaVendasWebContext _context;
         public EnderecoService(SistemaVendasWebContext context)
@@ -14,19 +15,10 @@ namespace SistemaVendasWeb.Services
             _context = context;
         }
 
-        public void Adicionar(Endereco endereco)
+        public void Criar(Endereco endereco)
         {
             _context.Add(endereco);
             _context.SaveChanges();
-        }
-
-        public Endereco BuscarPorId(long? id)
-        {
-            if(id == null)
-            {
-                return null;
-            }
-            return _context.Enderecos.Find(id);
         }
         public void Atualizar(Endereco endereco)
         {
@@ -43,6 +35,24 @@ namespace SistemaVendasWeb.Services
             {
                 throw new DBUpdateConcurrencyException(e.Message);
             }
+        }
+
+        public Endereco BuscarPorId(long id)
+        {
+            if (id == 0)
+            {
+                return null;
+            }
+            return _context.Enderecos.Find(id);
+        }
+
+        public ICollection<Endereco> BuscarTodos()
+        {
+            throw new System.NotImplementedException();
+        }
+        public void Excluir(long id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

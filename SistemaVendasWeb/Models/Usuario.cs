@@ -8,7 +8,7 @@ namespace SistemaVendasWeb.Models
 {
     public abstract class Usuario : IUsuario
     {
-        public long Id { get; private set; }
+        public long Id { get; set; }
         public string Nome { get; set; }
         public string Email { get; set; }
         public string CPF { get; set; }
@@ -21,6 +21,7 @@ namespace SistemaVendasWeb.Models
         public Endereco Endereco { get; set; }
         public long EnderecoId { get; set; }
         public Status Status { get; set; }
+        public long StatusId { get; set; }
         public DateTime DataNascimento { get; set; }
         public DateTime DataInclusao { get; set; }
         public DateTime DataExclusao { get; set; }
