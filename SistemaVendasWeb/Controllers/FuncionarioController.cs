@@ -40,5 +40,35 @@ namespace SistemaVendasWeb.Controllers
             _funcionariosService.Criar(funcionario);
             return RedirectToAction("Atualizar", "Endereco", funcionario.Endereco); 
         }
+        public IActionResult Excluir(long? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            Funcionario funcionario = _funcionariosService.BuscarPorId(id.Value);
+
+            if(funcionario == null)
+            {
+                return NotFound();
+            }
+
+            return View(funcionario);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Excluir(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            _funcionariosService.Excluir(id.Value);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

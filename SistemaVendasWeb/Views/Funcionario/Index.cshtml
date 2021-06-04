@@ -20,25 +20,13 @@
                 @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CPF)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Telefone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RG)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OrgaoExpedidor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sexo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumCarteiraTrabalho)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DataNascimento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status.Descricao)
             </th>
             <th>
                 Ações
@@ -52,43 +40,17 @@
             <td>
                 @Html.DisplayFor(modelFuncionario => funcionario.Nome)
             </td>
-
             <td>
                 @Html.DisplayFor(modelFuncionario => funcionario.Email)
             </td>
-
-            <td>
-                @Html.DisplayFor(modelFuncionario => funcionario.CPF)
-            </td>
-
             <td>
                 @Html.DisplayFor(modelFuncionario => funcionario.Telefone)
             </td>
-
-            <td>
-                @Html.DisplayFor(modelFuncionario => funcionario.RG)
-            </td>
-
-            <td>
-                @Html.DisplayFor(modelFuncionario => funcionario.OrgaoExpedidor)
-            </td>
-            @if (funcionario.Sexo == 'M')
-            {
-                <td>
-                    Masculino
-                </td>
-            }
-            else
-            {
-                <td>
-                    Feminino
-                </td>
-            }
-            <td>
-                @Html.DisplayFor(modelFuncionario => funcionario.NumCarteiraTrabalho)
-            </td>
             <td>
                 @Html.DisplayFor(modelFuncionario => funcionario.DataNascimento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelFuncionario => funcionario.Status.Descricao)
             </td>
             <td>
                 <a asp-action="Editar" asp-route-id="@funcionario.Id">Editar</a>
