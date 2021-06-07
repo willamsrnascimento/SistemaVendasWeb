@@ -32,7 +32,7 @@ namespace SistemaVendasWeb.Services
 
         public async Task<Funcionario> BuscarPorIdAsync(long id)
         {
-            Funcionario funcionario = await _context.Funcionarios.Include(obj => obj.Status).FirstOrDefaultAsync(obj => obj.Id == id);
+            Funcionario funcionario = await _context.Funcionarios.Include(obj => obj.Status).Include(obj => obj.Endereco).FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
                 return null;
@@ -40,13 +40,13 @@ namespace SistemaVendasWeb.Services
             return funcionario;
         }
 
-        public async Task<ICollection<Funcionario>> BuscarTodosAsync()
+        public async Task<List<Funcionario>> BuscarTodosAsync()
         {
             if (! await _context.Funcionarios.AnyAsync())
             {
                 return null;
             }
-            return await _context.Funcionarios.Include(obj => obj.Status).ToListAsync(); 
+            return await _context.Funcionarios.OrderBy(obj => obj.Nome).Include(obj => obj.Status).ToListAsync(); 
         }
 
         public async Task ExcluirAsync(long id)
@@ -64,7 +64,6 @@ namespace SistemaVendasWeb.Services
             }
             catch (DBUpdateConcurrencyException e)
             {
-
                 throw new DBUpdateConcurrencyException(e.Message);
             }
         }

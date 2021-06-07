@@ -27,7 +27,7 @@ namespace SistemaVendasWeb.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ICollection<Status>> BuscarTodosAsync()
+        public async Task<List<Status>> BuscarTodosAsync()
         {
             if (!_context.Status.Any())
             {

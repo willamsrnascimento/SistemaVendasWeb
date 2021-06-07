@@ -8,7 +8,7 @@ namespace SistemaVendasWeb.Repository
         Task CriarAsync(T t);
         Task AtualizarAsync(T t);
         Task ExcluirAsync(long id);
-        Task<ICollection<T>> BuscarTodosAsync();
+        Task<List<T>> BuscarTodosAsync();
         Task<T> BuscarPorIdAsync(long id);
     }
 }
