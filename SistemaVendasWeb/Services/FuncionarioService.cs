@@ -6,10 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using SistemaVendasWeb.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace SistemaVendasWeb.Services
 {
-    public class FuncionarioService : IBasico<Funcionario>
+    public class FuncionarioService : IBasicoAsync<Funcionario>
     {
         private readonly SistemaVendasWebContext _context;
 
@@ -17,20 +18,21 @@ namespace SistemaVendasWeb.Services
         {
             _context = context;
         }
-        public void Criar(Funcionario funcionario)
+        public async Task CriarAsync(Funcionario funcionario)
         {
             _context.Add(funcionario);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Atualizar(Funcionario funcionario)
+        public async Task AtualizarAsync(Funcionario funcionario)
         {
-            throw new NotImplementedException();
+            _context.Funcionarios.Update(funcionario);
+            await _context.SaveChangesAsync();
         }
 
-        public Funcionario BuscarPorId(long id)
+        public async Task<Funcionario> BuscarPorIdAsync(long id)
         {
-            Funcionario funcionario = _context.Funcionarios.Include(obj => obj.Status).FirstOrDefault(obj => obj.Id == id);
+            Funcionario funcionario = await _context.Funcionarios.Include(obj => obj.Status).FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
                 return null;
@@ -38,24 +40,33 @@ namespace SistemaVendasWeb.Services
             return funcionario;
         }
 
-        public ICollection<Funcionario> BuscarTodos()
+        public async Task<ICollection<Funcionario>> BuscarTodosAsync()
         {
-            if (!_context.Funcionarios.Any())
+            if (! await _context.Funcionarios.AnyAsync())
             {
                 return null;
             }
-            return _context.Funcionarios.Include(obj => obj.Status).ToList(); 
+            return await _context.Funcionarios.Include(obj => obj.Status).ToListAsync(); 
         }
 
-        public void Excluir(long id)
+        public async Task ExcluirAsync(long id)
         {
-            Funcionario funcionario = _context.Funcionarios.FirstOrDefault(obj => obj.Id == id);
+            Funcionario funcionario = await _context.Funcionarios.FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
                 throw new NotFoundException("Funcionario not found!");
             }
-            _context.Funcionarios.Remove(funcionario);
-            _context.SaveChanges();
+
+            try
+            {
+                _context.Funcionarios.Remove(funcionario);
+                await _context.SaveChangesAsync();
+            }
+            catch (DBUpdateConcurrencyException e)
+            {
+
+                throw new DBUpdateConcurrencyException(e.Message);
+            }
         }
 
  

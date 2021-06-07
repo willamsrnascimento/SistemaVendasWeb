@@ -4,10 +4,12 @@ using System.Linq;
 using SistemaVendasWeb.Services.Exception;
 using SistemaVendasWeb.Repository;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SistemaVendasWeb.Services
 {
-    public class EnderecoService : IBasico<Endereco>
+    public class EnderecoService : IBasicoAsync<Endereco>
     {
         private readonly SistemaVendasWebContext _context;
         public EnderecoService(SistemaVendasWebContext context)
@@ -15,12 +17,12 @@ namespace SistemaVendasWeb.Services
             _context = context;
         }
 
-        public void Criar(Endereco endereco)
+        public async Task CriarAsync(Endereco endereco)
         {
             _context.Add(endereco);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Atualizar(Endereco endereco)
+        public async Task AtualizarAsync(Endereco endereco)
         {
             if (!_context.Enderecos.Any(x => x.Id == endereco.Id)){
                 throw new NotFoundException("Id not Found.");
@@ -29,7 +31,7 @@ namespace SistemaVendasWeb.Services
             try
             {
                 _context.Enderecos.Update(endereco);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch(DBUpdateConcurrencyException e)
             {
@@ -37,22 +39,36 @@ namespace SistemaVendasWeb.Services
             }
         }
 
-        public Endereco BuscarPorId(long id)
+        public async Task<Endereco> BuscarPorIdAsync(long id)
         {
-            if (id == 0)
+            return await _context.Enderecos.FirstOrDefaultAsync(obj => obj.Id == id);
+        }
+
+        public async Task<ICollection<Endereco>> BuscarTodosAsync()
+        {
+            if (!_context.Enderecos.Any())
             {
                 return null;
             }
-            return _context.Enderecos.Find(id);
+            return await _context.Enderecos.ToListAsync();
         }
+        public async Task ExcluirAsync(long id)
+        {
+            Endereco endereco = await _context.Enderecos.FindAsync(id);
+            if(endereco == null)
+            {
+                throw new NotFoundException("EnderecoId not found!");
+            }
 
-        public ICollection<Endereco> BuscarTodos()
-        {
-            throw new System.NotImplementedException();
-        }
-        public void Excluir(long id)
-        {
-            throw new System.NotImplementedException();
+            try
+            {
+                _context.Remove(endereco);
+                await _context.SaveChangesAsync();
+            }
+            catch(DBUpdateConcurrencyException e)
+            {
+                throw new DBUpdateConcurrencyException(e.Message);
+            }
         }
     }
 }

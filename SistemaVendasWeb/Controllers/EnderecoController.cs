@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaVendasWeb.Models;
 using SistemaVendasWeb.Services;
@@ -25,14 +26,14 @@ namespace SistemaVendasWeb.Controllers
             return View();
         }
 
-        public IActionResult Atualizar(long? id)
+        public async Task<IActionResult> Atualizar(long? id)
         {
             if(id == null)
             {
                 return NotFound();
             }
 
-            Endereco endereco = _enderecoService.BuscarPorId(id.Value);
+            Endereco endereco = await _enderecoService.BuscarPorIdAsync(id.Value);
 
             if(endereco == null)
             {
@@ -46,7 +47,7 @@ namespace SistemaVendasWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] 
-        public IActionResult Atualizar(long id, Endereco endereco)
+        public async Task<IActionResult> Atualizar(long id, Endereco endereco)
         {
             if(!(endereco.Id == id))
             {
@@ -54,7 +55,7 @@ namespace SistemaVendasWeb.Controllers
             }
             try
             {
-                _enderecoService.Atualizar(endereco);
+               await _enderecoService.AtualizarAsync(endereco);
             }
             catch(NotFoundException e)
             {
