@@ -18,5 +18,17 @@ namespace SistemaVendasWeb.Data
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Status> Status { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<Funcionario>()
+        //        .HasOne(obj => obj.Endereco)
+        //        .WithOne(obj => obj.Funcionario)
+        //        .OnDelete(DeleteBehavior.ClientCascade);
+        //  //
+        //  // modelBuilder.Entity<Status>()
+        //  //     .HasMany(obj => obj.)
+        //}
     }
 }

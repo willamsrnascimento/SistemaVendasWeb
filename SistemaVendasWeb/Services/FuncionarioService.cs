@@ -60,6 +60,7 @@ namespace SistemaVendasWeb.Services
             try
             {
                 _context.Funcionarios.Remove(funcionario);
+               
                 await _context.SaveChangesAsync();
             }
             catch (DBUpdateConcurrencyException e)

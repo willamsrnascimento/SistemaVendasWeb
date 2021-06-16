@@ -9,8 +9,8 @@ using SistemaVendasWeb.Data;
 namespace SistemaVendasWeb.Migrations
 {
     [DbContext(typeof(SistemaVendasWebContext))]
-    [Migration("20210529195724_UsuarioEnderecoChaveEstrangeira")]
-    partial class UsuarioEnderecoChaveEstrangeira
+    [Migration("20210616180318_MigracaoCorrigida")]
+    partial class MigracaoCorrigida
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,7 +88,7 @@ namespace SistemaVendasWeb.Migrations
                         .IsRequired()
                         .HasConversion(new ValueConverter<string, string>(v => default(string), v => default(string), new ConverterMappingHints(size: 1)));
 
-                    b.Property<long?>("StatusId");
+                    b.Property<long>("StatusId");
 
                     b.Property<string>("Telefone");
 
@@ -132,7 +132,8 @@ namespace SistemaVendasWeb.Migrations
 
                     b.HasOne("SistemaVendasWeb.Models.Status", "Status")
                         .WithMany()
-                        .HasForeignKey("StatusId");
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

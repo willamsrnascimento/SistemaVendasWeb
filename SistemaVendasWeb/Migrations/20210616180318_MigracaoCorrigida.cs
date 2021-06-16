@@ -4,10 +4,23 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class EntitiesFuncStatEnde : Migration
+    public partial class MigracaoCorrigida : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ClasseTeste",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClasseTeste", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Enderecos",
                 columns: table => new
@@ -58,8 +71,8 @@ namespace SistemaVendasWeb.Migrations
                     Sexo = table.Column<string>(nullable: false),
                     Login = table.Column<string>(nullable: true),
                     Senha = table.Column<string>(nullable: true),
-                    EnderecoId = table.Column<long>(nullable: true),
-                    StatusId = table.Column<long>(nullable: true),
+                    EnderecoId = table.Column<long>(nullable: false),
+                    StatusId = table.Column<long>(nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
                     DataInclusao = table.Column<DateTime>(nullable: false),
                     DataExclusao = table.Column<DateTime>(nullable: false),
@@ -74,13 +87,13 @@ namespace SistemaVendasWeb.Migrations
                         column: x => x.EnderecoId,
                         principalTable: "Enderecos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Funcionarios_Status_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -96,6 +109,9 @@ namespace SistemaVendasWeb.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ClasseTeste");
+
             migrationBuilder.DropTable(
                 name: "Funcionarios");
 

@@ -1,0 +1,52 @@
+﻿@model SistemaVendasWeb.Models.Funcionario;
+
+    <div class="panel">
+        <div class="panel-header"><span>Funcionário</span></div>
+        <div class="panel-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="success">
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nome)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Telefone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DataNascimento)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status.Descricao)
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Telefone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.DataNascimento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.Status.Descricao)
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+            <a class="btn btn-default" asp-controller="Funcionario" asp-action="Editar" asp-route-id="@Model.Id">Editar</a>
+        </div>
+        
+    </div>

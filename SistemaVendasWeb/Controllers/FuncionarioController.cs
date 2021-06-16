@@ -66,11 +66,11 @@ namespace SistemaVendasWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(Funcionario funcionario)
+        public async Task<IActionResult> Editar(long id, Funcionario funcionario)
         {
-            if (funcionario.EnderecoId == 0)
+            if (id != funcionario.Id)
             {
-                return NotFound();
+                return BadRequest();
             }
 
             funcionario.Endereco = await _enderecoService.BuscarPorIdAsync(funcionario.EnderecoId);
@@ -89,6 +89,23 @@ namespace SistemaVendasWeb.Controllers
             }          
             
             return RedirectToAction("Atualizar", "Endereco", funcionario.Endereco);
+        }
+
+        public async Task<IActionResult> Detalhes(long? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+
+            if(funcionario == null)
+            {
+                return NotFound();
+            }
+
+            return View(funcionario);
         }
 
         public async Task<IActionResult> Excluir(long? id)
@@ -117,7 +134,15 @@ namespace SistemaVendasWeb.Controllers
                 return NotFound();
             }
 
-            await _funcionariosService.ExcluirAsync(id.Value);
+            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+
+            if(funcionario == null)
+            {
+                return NotFound();
+            }
+            
+            await _funcionariosService.ExcluirAsync(funcionario.Id);
+            await _enderecoService.ExcluirAsync(funcionario.EnderecoId);
 
             return RedirectToAction(nameof(Index));
         }

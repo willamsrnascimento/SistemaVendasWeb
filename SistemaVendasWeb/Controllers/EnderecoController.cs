@@ -43,8 +43,6 @@ namespace SistemaVendasWeb.Controllers
             return View(endereco);
         }
 
-      
-
         [HttpPost]
         [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Atualizar(long id, Endereco endereco)

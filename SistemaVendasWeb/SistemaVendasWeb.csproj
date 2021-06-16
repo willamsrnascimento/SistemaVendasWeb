@@ -5,6 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20210513210618_Initial.cs" />
+    <Compile Remove="Migrations\20210513210618_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210521170717_EntitiesFuncStatEnde.cs" />
+    <Compile Remove="Migrations\20210521170717_EntitiesFuncStatEnde.Designer.cs" />
+    <Compile Remove="Migrations\20210529195724_UsuarioEnderecoChaveEstrangeira.cs" />
+    <Compile Remove="Migrations\20210529195724_UsuarioEnderecoChaveEstrangeira.Designer.cs" />
+    <Compile Remove="Migrations\20210603184456_UsuarioStatusChaveEstrangeira.cs" />
+    <Compile Remove="Migrations\20210603184456_UsuarioStatusChaveEstrangeira.Designer.cs" />
+    <Compile Remove="Migrations\20210611210153_testandoFluentAPI.cs" />
+    <Compile Remove="Migrations\20210611210153_testandoFluentAPI.Designer.cs" />
+    <Compile Remove="Migrations\20210611212030_NovaMgrcao.cs" />
+    <Compile Remove="Migrations\20210611212030_NovaMgrcao.Designer.cs" />
     <Compile Remove="Models\Interface.cs" />
     <Compile Remove="Repository\IBasico1.cs" />
   </ItemGroup>
