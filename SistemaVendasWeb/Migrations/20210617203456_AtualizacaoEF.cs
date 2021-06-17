@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class MigracaoCorrigida : Migration
+    public partial class AtualizacaoEF : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
