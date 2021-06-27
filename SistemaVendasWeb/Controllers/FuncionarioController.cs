@@ -73,8 +73,15 @@ namespace SistemaVendasWeb.Controllers
                 return BadRequest();
             }
 
-            funcionario.Endereco = await _enderecoService.BuscarPorIdAsync(funcionario.EnderecoId);
-
+            if(funcionario.EnderecoId == null)
+            {
+                funcionario.Endereco = new Endereco();
+            }
+            else
+            {
+                funcionario.Endereco = await _enderecoService.BuscarPorIdAsync(funcionario.EnderecoId.Value);
+            }
+            
             try
             {
                 await _funcionariosService.AtualizarAsync(funcionario);
@@ -88,7 +95,7 @@ namespace SistemaVendasWeb.Controllers
                 throw new NotFoundException(e.Message);
             }          
             
-            return RedirectToAction("Atualizar", "Endereco", funcionario.Endereco);
+            return RedirectToAction("Editar", "Endereco", funcionario.Endereco);
         }
 
         public async Task<IActionResult> Detalhes(long? id)
@@ -142,7 +149,7 @@ namespace SistemaVendasWeb.Controllers
             }
             
             await _funcionariosService.ExcluirAsync(funcionario.Id);
-            await _enderecoService.ExcluirAsync(funcionario.EnderecoId);
+            await _enderecoService.ExcluirAsync(funcionario.EnderecoId.Value);
 
             return RedirectToAction(nameof(Index));
         }

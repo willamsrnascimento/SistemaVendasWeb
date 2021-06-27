@@ -26,7 +26,7 @@ namespace SistemaVendasWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Atualizar(long? id)
+        public async Task<IActionResult> Editar(long? id)
         {
             if(id == null)
             {
@@ -45,7 +45,7 @@ namespace SistemaVendasWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken] 
-        public async Task<IActionResult> Atualizar(long id, Endereco endereco)
+        public async Task<IActionResult> Editar(long id, Endereco endereco)
         {
             if(!(endereco.Id == id))
             {

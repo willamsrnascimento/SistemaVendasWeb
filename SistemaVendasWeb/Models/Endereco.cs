@@ -9,7 +9,7 @@ namespace SistemaVendasWeb.Models
     {
         public long Id { get; set; }
         public string Rua { get; set; }
-        public int Numero { get; set; }
+        public string Numero { get; set; }
         public string Complemento { get; set; }
         public string CEP { get; set; }
         public string Bairro { get; set; }
@@ -20,7 +20,7 @@ namespace SistemaVendasWeb.Models
 
         }
 
-        public Endereco(long id, string rua, int numero, string complemento, string cEP, string bairro, string cidade)
+        public Endereco(long id, string rua, string numero, string complemento, string cEP, string bairro, string cidade)
         {
             Id = id;
             Rua = rua;

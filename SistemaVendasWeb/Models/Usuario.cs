@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using SistemaVendasWeb.Repository;
@@ -19,7 +20,7 @@ namespace SistemaVendasWeb.Models
         public string Login { get; set; }
         public string Senha { get; set; }
         public Endereco Endereco { get; set; }
-        public long EnderecoId { get; set; }
+        public long? EnderecoId { get; set; }
         public Status Status { get; set; }
         public long StatusId { get; set; }
         public DateTime DataNascimento { get; set; }

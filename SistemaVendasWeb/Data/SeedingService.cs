@@ -28,9 +28,9 @@ namespace SistemaVendasWeb.Data
             Status s2 = new Status(2, 'I', "Inativo", new DateTime(2021, 05, 21), new DateTime(), new DateTime());
             Status s3 = new Status(3, 'D', "Deletado", new DateTime(2021, 05, 21), new DateTime(), new DateTime());
 
-            Endereco e1 = new Endereco(1, "Jose Moscow", 3, "Bloco 10, Apto 1", "555", "Candeias", "Jaboatao");
-            Endereco e2 = new Endereco(2, "Caracol", 702, "Bloco 5, Apto 123", "444", "Candeias", "Jaboatao");
-            Endereco e3 = new Endereco(3, "Rua Carangueijo", 55, "N/A", "222", "Caxangá", "Recife");
+            Endereco e1 = new Endereco(1, "Jose Moscow", "55", "Bloco 10, Apto 1", "555", "Candeias", "Jaboatao");
+            Endereco e2 = new Endereco(2, "Caracol", "784", "Bloco 5, Apto 123", "444", "Candeias", "Jaboatao");
+            Endereco e3 = new Endereco(3, "Rua Carangueijo", "98 A", "N/A", "222", "Caxangá", "Recife");
 
             Funcionario f1 = new Funcionario(1, "Raul Gil", "raul@gmail.com", "111", "81888888", "111", "SDS", 'M', "raul", "123", e1, s1, new DateTime(1999, 05, 01), new DateTime(2021, 05, 21), new DateTime(), new DateTime(), "1111111");
             Funcionario f2 = new Funcionario(2, "Carlos Alberto", "carlos@gmail.com", "222", "8122222", "222", "SDS", 'M', "carlos", "123", e2, s2, new DateTime(1899, 12, 03), new DateTime(2021, 05, 21), new DateTime(), new DateTime(), "444444");

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SistemaVendasWeb.Data.Configuration;
 using SistemaVendasWeb.Models;
 
 namespace SistemaVendasWeb.Data
@@ -12,6 +13,7 @@ namespace SistemaVendasWeb.Data
         public SistemaVendasWebContext (DbContextOptions<SistemaVendasWebContext> options)
             : base(options)
         {
+            
         }
 
         public DbSet<ClasseTeste> ClasseTeste { get; set; }
@@ -19,16 +21,12 @@ namespace SistemaVendasWeb.Data
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Status> Status { get; set; }
 
-        //protected override void OnModelCreating(ModelBuilder modelBuilder)
-        //{
-        //    base.OnModelCreating(modelBuilder);
-        //    modelBuilder.Entity<Funcionario>()
-        //        .HasOne(obj => obj.Endereco)
-        //        .WithOne(obj => obj.Funcionario)
-        //        .OnDelete(DeleteBehavior.ClientCascade);
-        //  //
-        //  // modelBuilder.Entity<Status>()
-        //  //     .HasMany(obj => obj.)
-        //}
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
+            modelBuilder.ApplyConfiguration(new FuncionarioConfiguration());         
+        }
     }
 }

@@ -9,8 +9,8 @@ using SistemaVendasWeb.Data;
 namespace SistemaVendasWeb.Migrations
 {
     [DbContext(typeof(SistemaVendasWebContext))]
-    [Migration("20210617203456_AtualizacaoEF")]
-    partial class AtualizacaoEF
+    [Migration("20210627011908_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,26 +40,32 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Bairro")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
                     b.Property<string>("CEP")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Cidade")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Complemento")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
+                    b.Property<string>("Numero")
+                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Rua")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Enderecos");
+                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Funcionario", b =>
@@ -69,7 +75,9 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("CPF")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasMaxLength(15);
 
                     b.Property<DateTime>("DataAlteracao")
                         .HasColumnType("datetime(6)");
@@ -84,28 +92,40 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(120) CHARACTER SET utf8mb4")
+                        .HasMaxLength(120);
 
-                    b.Property<long>("EnderecoId")
+                    b.Property<long?>("EnderecoId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Login")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(35) CHARACTER SET utf8mb4")
+                        .HasMaxLength(35);
 
                     b.Property<string>("Nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(120) CHARACTER SET utf8mb4")
+                        .HasMaxLength(120);
 
                     b.Property<string>("NumCarteiraTrabalho")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasMaxLength(15);
 
                     b.Property<string>("OrgaoExpedidor")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasMaxLength(5);
 
                     b.Property<string>("RG")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasMaxLength(10);
 
                     b.Property<string>("Senha")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(35) CHARACTER SET utf8mb4")
+                        .HasMaxLength(35);
 
                     b.Property<string>("Sexo")
                         .IsRequired()
@@ -115,7 +135,9 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .IsRequired()
+                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasMaxLength(15);
 
                     b.HasKey("Id");
 
@@ -123,7 +145,7 @@ namespace SistemaVendasWeb.Migrations
 
                     b.HasIndex("StatusId");
 
-                    b.ToTable("Funcionarios");
+                    b.ToTable("Funcionario");
                 });
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Status", b =>
@@ -158,13 +180,12 @@ namespace SistemaVendasWeb.Migrations
                     b.HasOne("SistemaVendasWeb.Models.Endereco", "Endereco")
                         .WithMany()
                         .HasForeignKey("EnderecoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SistemaVendasWeb.Models.Status", "Status")
                         .WithMany()
                         .HasForeignKey("StatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

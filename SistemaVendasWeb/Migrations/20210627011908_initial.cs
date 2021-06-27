@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class AtualizacaoEF : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -22,21 +22,21 @@ namespace SistemaVendasWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Enderecos",
+                name: "Endereco",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Rua = table.Column<string>(nullable: true),
-                    Numero = table.Column<int>(nullable: false),
-                    Complemento = table.Column<string>(nullable: true),
-                    CEP = table.Column<string>(nullable: true),
-                    Bairro = table.Column<string>(nullable: true),
-                    Cidade = table.Column<string>(nullable: true)
+                    Rua = table.Column<string>(maxLength: 100, nullable: true),
+                    Numero = table.Column<string>(maxLength: 10, nullable: true),
+                    Complemento = table.Column<string>(maxLength: 100, nullable: true),
+                    CEP = table.Column<string>(maxLength: 10, nullable: true),
+                    Bairro = table.Column<string>(maxLength: 100, nullable: true),
+                    Cidade = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Enderecos", x => x.Id);
+                    table.PrimaryKey("PK_Endereco", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,53 +57,53 @@ namespace SistemaVendasWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionarios",
+                name: "Funcionario",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    CPF = table.Column<string>(nullable: true),
-                    Telefone = table.Column<string>(nullable: true),
-                    RG = table.Column<string>(nullable: true),
-                    OrgaoExpedidor = table.Column<string>(nullable: true),
+                    Nome = table.Column<string>(maxLength: 120, nullable: false),
+                    Email = table.Column<string>(maxLength: 120, nullable: false),
+                    CPF = table.Column<string>(maxLength: 15, nullable: false),
+                    Telefone = table.Column<string>(maxLength: 15, nullable: false),
+                    RG = table.Column<string>(maxLength: 10, nullable: false),
+                    OrgaoExpedidor = table.Column<string>(maxLength: 5, nullable: false),
                     Sexo = table.Column<string>(nullable: false),
-                    Login = table.Column<string>(nullable: true),
-                    Senha = table.Column<string>(nullable: true),
-                    EnderecoId = table.Column<long>(nullable: false),
+                    Login = table.Column<string>(maxLength: 35, nullable: true),
+                    Senha = table.Column<string>(maxLength: 35, nullable: true),
+                    EnderecoId = table.Column<long>(nullable: true),
                     StatusId = table.Column<long>(nullable: false),
                     DataNascimento = table.Column<DateTime>(nullable: false),
                     DataInclusao = table.Column<DateTime>(nullable: false),
                     DataExclusao = table.Column<DateTime>(nullable: false),
                     DataAlteracao = table.Column<DateTime>(nullable: false),
-                    NumCarteiraTrabalho = table.Column<string>(nullable: true)
+                    NumCarteiraTrabalho = table.Column<string>(maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionarios", x => x.Id);
+                    table.PrimaryKey("PK_Funcionario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funcionarios_Enderecos_EnderecoId",
+                        name: "FK_Funcionario_Endereco_EnderecoId",
                         column: x => x.EnderecoId,
-                        principalTable: "Enderecos",
+                        principalTable: "Endereco",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Funcionarios_Status_StatusId",
+                        name: "FK_Funcionario_Status_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Status",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionarios_EnderecoId",
-                table: "Funcionarios",
+                name: "IX_Funcionario_EnderecoId",
+                table: "Funcionario",
                 column: "EnderecoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionarios_StatusId",
-                table: "Funcionarios",
+                name: "IX_Funcionario_StatusId",
+                table: "Funcionario",
                 column: "StatusId");
         }
 
@@ -113,10 +113,10 @@ namespace SistemaVendasWeb.Migrations
                 name: "ClasseTeste");
 
             migrationBuilder.DropTable(
-                name: "Funcionarios");
+                name: "Funcionario");
 
             migrationBuilder.DropTable(
-                name: "Enderecos");
+                name: "Endereco");
 
             migrationBuilder.DropTable(
                 name: "Status");

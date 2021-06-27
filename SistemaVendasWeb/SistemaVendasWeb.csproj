@@ -17,6 +17,40 @@
     <Compile Remove="Migrations\20210611210153_testandoFluentAPI.Designer.cs" />
     <Compile Remove="Migrations\20210611212030_NovaMgrcao.cs" />
     <Compile Remove="Migrations\20210611212030_NovaMgrcao.Designer.cs" />
+    <Compile Remove="Migrations\20210617203456_AtualizacaoEF.cs" />
+    <Compile Remove="Migrations\20210617203456_AtualizacaoEF.Designer.cs" />
+    <Compile Remove="Migrations\20210624174236_NovaMigration.cs" />
+    <Compile Remove="Migrations\20210624174236_NovaMigration.Designer.cs" />
+    <Compile Remove="Migrations\20210624175159_AtualizandoOnDeleteEndereco.cs" />
+    <Compile Remove="Migrations\20210624175159_AtualizandoOnDeleteEndereco.Designer.cs" />
+    <Compile Remove="Migrations\20210624175931_AtualizandoOnDeleteEndereco.cs" />
+    <Compile Remove="Migrations\20210624175931_AtualizandoOnDeleteEndereco.Designer.cs" />
+    <Compile Remove="Migrations\20210624180258_AtualizandoOnDeleteEndereco.cs" />
+    <Compile Remove="Migrations\20210624180258_AtualizandoOnDeleteEndereco.Designer.cs" />
+    <Compile Remove="Migrations\20210624181803_AtualizandoOnDeleteEndereco.cs" />
+    <Compile Remove="Migrations\20210624181803_AtualizandoOnDeleteEndereco.Designer.cs" />
+    <Compile Remove="Migrations\20210624185038_AtualizandoOnDeleteEndereco.cs" />
+    <Compile Remove="Migrations\20210624185038_AtualizandoOnDeleteEndereco.Designer.cs" />
+    <Compile Remove="Migrations\20210625183212_Initial.cs" />
+    <Compile Remove="Migrations\20210625183212_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210625183630_Initial.cs" />
+    <Compile Remove="Migrations\20210625183630_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210625184117_Initial.cs" />
+    <Compile Remove="Migrations\20210625184117_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627002514_initial.cs" />
+    <Compile Remove="Migrations\20210627002514_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627003252_initial.cs" />
+    <Compile Remove="Migrations\20210627003252_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627003339_initial.cs" />
+    <Compile Remove="Migrations\20210627003339_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627003800_initial.cs" />
+    <Compile Remove="Migrations\20210627003800_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627005058_initial.cs" />
+    <Compile Remove="Migrations\20210627005058_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627005209_initial.cs" />
+    <Compile Remove="Migrations\20210627005209_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627005327_initial.cs" />
+    <Compile Remove="Migrations\20210627005327_initial.Designer.cs" />
     <Compile Remove="Models\Interface.cs" />
     <Compile Remove="Repository\IBasico1.cs" />
   </ItemGroup>
@@ -41,6 +75,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
