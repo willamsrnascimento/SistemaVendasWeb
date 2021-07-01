@@ -41,7 +41,7 @@ namespace SistemaVendasWeb.Controllers
         {
             funcionario.Endereco = new Endereco();
             await _funcionariosService.CriarAsync(funcionario);
-            return RedirectToAction("Atualizar", "Endereco", funcionario.Endereco); 
+            return RedirectToAction("Editar", "Endereco", funcionario.Endereco); 
         }
 
         public async Task<IActionResult> Editar(long? id)
