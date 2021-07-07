@@ -49,6 +49,26 @@ namespace SistemaVendasWeb.Services
             return await _context.Funcionarios.OrderBy(obj => obj.Nome).Include(obj => obj.Status).ToListAsync(); 
         }
 
+        public async Task<List<Funcionario>> BuscarPorFiltroAsync(int sFiltro, string txtProcurar)
+        {
+            var result = from obj in _context.Funcionarios select obj;
+            
+            if(sFiltro == 1)
+            {
+                result = result.Where(obj => obj.Nome.ToUpper().Contains(txtProcurar.ToUpper()));
+            }
+            else if(sFiltro == 2)
+            {
+                result = result.Where(obj => obj.Email.ToUpper().Contains(txtProcurar.ToUpper()));
+            }
+            else
+            {
+                result = result.Where(obj => obj.Telefone.ToUpper().Contains(txtProcurar.ToUpper()));
+            }
+
+            return await result.Include(obj => obj.Status).ToListAsync();
+        }
+
         public async Task ExcluirAsync(long id)
         {
             Funcionario funcionario = await _context.Funcionarios.FirstOrDefaultAsync(obj => obj.Id == id);

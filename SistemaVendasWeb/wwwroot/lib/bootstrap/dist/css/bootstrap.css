@@ -6644,8 +6644,9 @@ button.close {
 .visible-lg-inline-block {
   display: none !important;
 }
+
 @media (max-width: 767px) {
-  .visible-xs {
+    .visible-xs {
     display: block !important;
   }
   table.visible-xs {

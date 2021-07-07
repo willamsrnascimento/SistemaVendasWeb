@@ -9,8 +9,8 @@ using SistemaVendasWeb.Data;
 namespace SistemaVendasWeb.Migrations
 {
     [DbContext(typeof(SistemaVendasWebContext))]
-    [Migration("20210627011908_initial")]
-    partial class initial
+    [Migration("20210706211209_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,7 +141,8 @@ namespace SistemaVendasWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
 
                     b.HasIndex("StatusId");
 
@@ -178,8 +179,8 @@ namespace SistemaVendasWeb.Migrations
             modelBuilder.Entity("SistemaVendasWeb.Models.Funcionario", b =>
                 {
                     b.HasOne("SistemaVendasWeb.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
+                        .WithOne("Funcionario")
+                        .HasForeignKey("SistemaVendasWeb.Models.Funcionario", "EnderecoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SistemaVendasWeb.Models.Status", "Status")

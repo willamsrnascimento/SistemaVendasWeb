@@ -51,6 +51,10 @@
     <Compile Remove="Migrations\20210627005209_initial.Designer.cs" />
     <Compile Remove="Migrations\20210627005327_initial.cs" />
     <Compile Remove="Migrations\20210627005327_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210627011908_initial.cs" />
+    <Compile Remove="Migrations\20210627011908_initial.Designer.cs" />
+    <Compile Remove="Migrations\20210706151614_Initial.cs" />
+    <Compile Remove="Migrations\20210706151614_Initial.Designer.cs" />
     <Compile Remove="Models\Interface.cs" />
     <Compile Remove="Repository\IBasico1.cs" />
   </ItemGroup>

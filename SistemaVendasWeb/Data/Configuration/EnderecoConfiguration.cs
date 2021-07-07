@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SistemaVendasWeb.Models;
 
@@ -31,6 +27,10 @@ namespace SistemaVendasWeb.Data.Configuration
 
             builder.Property(obj => obj.Cidade)
                    .HasMaxLength(100);
+
+            builder.HasOne(obj => obj.Funcionario)
+                   .WithOne(obj => obj.Endereco)
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

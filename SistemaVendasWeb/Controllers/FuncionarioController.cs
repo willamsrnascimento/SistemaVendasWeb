@@ -23,9 +23,26 @@ namespace SistemaVendasWeb.Controllers
             _statusService = statusService;
             _enderecoService = enderecoService;
         }
+
         public async Task<IActionResult> Index()
         {
             IEnumerable list = await _funcionariosService.BuscarTodosAsync();
+            return View(list);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Index(int? sFiltro, string txtProcurar)
+        {
+            IEnumerable list = null;
+
+            if (sFiltro != null && (!String.IsNullOrEmpty(txtProcurar)))
+            {
+                list = await _funcionariosService.BuscarPorFiltroAsync(sFiltro.Value, txtProcurar);
+                return View(list);
+            }
+
+            list = await _funcionariosService.BuscarTodosAsync();
             return View(list);
         }
         public async Task<IActionResult> Criar()

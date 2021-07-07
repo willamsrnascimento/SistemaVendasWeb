@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,7 +99,8 @@ namespace SistemaVendasWeb.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionario_EnderecoId",
                 table: "Funcionario",
-                column: "EnderecoId");
+                column: "EnderecoId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionario_StatusId",

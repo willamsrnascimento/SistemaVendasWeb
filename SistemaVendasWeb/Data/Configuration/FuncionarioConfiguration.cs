@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SistemaVendasWeb.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SistemaVendasWeb.Data.Configuration
 {
@@ -63,9 +59,14 @@ namespace SistemaVendasWeb.Data.Configuration
             builder.Property(p => p.DataNascimento)
                    .IsRequired();
 
+            /* builder.HasOne(obj => obj.Endereco)
+                    .WithMany()
+                    .HasForeignKey("EnderecoId")
+                    .OnDelete(DeleteBehavior.SetNull); */
+
             builder.HasOne(obj => obj.Endereco)
-                   .WithMany()
-                   .HasForeignKey("EnderecoId")
+                   .WithOne(obj => obj.Funcionario)
+                   .HasForeignKey<Funcionario>(obj => obj.EnderecoId)
                    .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne(obj => obj.Status)

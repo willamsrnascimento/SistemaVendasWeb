@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace SistemaVendasWeb.Models
 {
     public class Endereco
@@ -14,6 +10,7 @@ namespace SistemaVendasWeb.Models
         public string CEP { get; set; }
         public string Bairro { get; set; }
         public string Cidade { get; set; }
+        public Funcionario Funcionario { get; set; }
 
         public Endereco()
         {

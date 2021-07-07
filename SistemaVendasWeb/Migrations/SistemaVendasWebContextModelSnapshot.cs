@@ -139,7 +139,8 @@ namespace SistemaVendasWeb.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EnderecoId");
+                    b.HasIndex("EnderecoId")
+                        .IsUnique();
 
                     b.HasIndex("StatusId");
 
@@ -176,8 +177,8 @@ namespace SistemaVendasWeb.Migrations
             modelBuilder.Entity("SistemaVendasWeb.Models.Funcionario", b =>
                 {
                     b.HasOne("SistemaVendasWeb.Models.Endereco", "Endereco")
-                        .WithMany()
-                        .HasForeignKey("EnderecoId")
+                        .WithOne("Funcionario")
+                        .HasForeignKey("SistemaVendasWeb.Models.Funcionario", "EnderecoId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SistemaVendasWeb.Models.Status", "Status")
