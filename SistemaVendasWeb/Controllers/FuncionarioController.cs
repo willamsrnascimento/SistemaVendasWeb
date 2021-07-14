@@ -56,6 +56,12 @@ namespace SistemaVendasWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Criar(Funcionario funcionario)
         {
+            if (!ModelState.IsValid)
+            {
+                var status = await _statusService.BuscarTodosAsync();
+                FuncionarioViewModel viewModel = new FuncionarioViewModel() { Funcionario = funcionario, Statuses = status };
+                return View("Criar", viewModel);
+            }
             funcionario.Endereco = new Endereco();
             await _funcionariosService.CriarAsync(funcionario);
             return RedirectToAction("Editar", "Endereco", funcionario.Endereco); 

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using SistemaVendasWeb.Repository;
 
 namespace SistemaVendasWeb.Models
 {
     public class Funcionario : Usuario
     {
+        [Display(Name = "Carteira de Trabalho")]
         public string NumCarteiraTrabalho { get; set; }
         public Funcionario() 
             : base()

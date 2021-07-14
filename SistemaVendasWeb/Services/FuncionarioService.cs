@@ -52,20 +52,22 @@ namespace SistemaVendasWeb.Services
         public async Task<List<Funcionario>> BuscarPorFiltroAsync(int sFiltro, string txtProcurar)
         {
             var result = from obj in _context.Funcionarios select obj;
-            
-            if(sFiltro == 1)
-            {
-                result = result.Where(obj => obj.Nome.ToUpper().Contains(txtProcurar.ToUpper()));
-            }
-            else if(sFiltro == 2)
-            {
-                result = result.Where(obj => obj.Email.ToUpper().Contains(txtProcurar.ToUpper()));
-            }
-            else
-            {
-                result = result.Where(obj => obj.Telefone.ToUpper().Contains(txtProcurar.ToUpper()));
-            }
 
+            switch (sFiltro)
+            {
+                case 1:
+                    result = result.Where(obj => obj.Nome.ToUpper().Contains(txtProcurar.ToUpper()));
+                    break;
+                case 2:
+                    result = result.Where(obj => obj.Email.ToUpper().Contains(txtProcurar.ToUpper()));
+                    break;
+                case 3:
+                    result = result.Where(obj => obj.Telefone.ToUpper().Contains(txtProcurar.ToUpper()));
+                    break;
+                default:
+                    Console.WriteLine("Nenhum filtro selecionado!!");
+                    break;
+            }
             return await result.Include(obj => obj.Status).ToListAsync();
         }
 

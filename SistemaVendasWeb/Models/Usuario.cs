@@ -15,18 +15,27 @@ namespace SistemaVendasWeb.Models
         public string CPF { get; set; }
         public string Telefone { get; set; }
         public string RG { get; set; }
-        public string OrgaoExpedidor { get; set; }
         public char Sexo { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
         public Endereco Endereco { get; set; }
         public long? EnderecoId { get; set; }
         public Status Status { get; set; }
-        public long StatusId { get; set; }
-        public DateTime DataNascimento { get; set; }
         public DateTime DataInclusao { get; set; }
         public DateTime DataExclusao { get; set; }
         public DateTime DataAlteracao { get; set; }
+
+        [Display(Name = "Orgão Expedidor")]
+        public string OrgaoExpedidor { get; set; }
+
+        [Display(Name = "Status")]
+        public long StatusId { get; set; }
+
+        [Display(Name = "Data de Nascimento")]
+        [DataType(DataType.Date)]
+        public DateTime DataNascimento { get; set; }
+
+
 
         public Usuario()
         {

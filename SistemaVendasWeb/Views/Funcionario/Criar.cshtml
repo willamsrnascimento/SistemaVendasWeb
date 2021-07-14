@@ -12,34 +12,42 @@
             <div class="form-group">
                 <label asp-for="Funcionario.Nome" class="control-label"></label>
                 <input asp-for="Funcionario.Nome" class="form-control" />
+                <span asp-validation-for="Funcionario.Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.Email" class="control-label"></label>
                 <input asp-for="Funcionario.Email" class="form-control" />
+                <span asp-validation-for="Funcionario.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.Telefone" class="control-label"></label>
-                <input asp-for="Funcionario.Telefone" class="form-control" />
+                <input asp-for="Funcionario.Telefone" class="form-control" id="telefone"/>
+                <span asp-validation-for="Funcionario.Telefone" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.RG" class="control-label"></label>
-                <input asp-for="Funcionario.RG" class="form-control" />
+                <input asp-for="Funcionario.RG" class="form-control" id="rg"/>
+                <span asp-validation-for="Funcionario.RG" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.OrgaoExpedidor" class="control-label"></label>
                 <input asp-for="Funcionario.OrgaoExpedidor" class="form-control" />
+                <span asp-validation-for="Funcionario.OrgaoExpedidor" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.CPF" class="control-label"></label>
-                <input asp-for="Funcionario.CPF" class="form-control" />
+                <input asp-for="Funcionario.CPF" class="form-control" id="cpf"/>
+                <span asp-validation-for="Funcionario.CPF" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.NumCarteiraTrabalho" class="control-label"></label>
                 <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control" />
+                <span asp-validation-for="Funcionario.NumCarteiraTrabalho" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.DataNascimento" class="control-label"></label>
                 <input asp-for="Funcionario.DataNascimento" class="form-control" />
+                <span asp-validation-for="Funcionario.DataNascimento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.Sexo" class="control-label"></label>
@@ -47,6 +55,7 @@
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
                 </select>
+                <span asp-validation-for="Funcionario.Sexo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Funcionario.StatusId" class="control-label"></label>
@@ -59,3 +68,7 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using SistemaVendasWeb.Data;
 using SistemaVendasWeb.Services;
 using Microsoft.Extensions.Hosting;
+using FluentValidation.AspNetCore;
+using SistemaVendasWeb.Models.Validators;
 
 namespace SistemaVendasWeb
 {
@@ -37,6 +39,8 @@ namespace SistemaVendasWeb
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FuncionarioValidator>());
 
             services.AddDbContext<SistemaVendasWebContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SistemaVendasWebContext"), builder => builder.MigrationsAssembly("SistemaVendasWeb")));
