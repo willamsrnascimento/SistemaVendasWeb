@@ -7,6 +7,7 @@ using System.Linq;
 using SistemaVendasWeb.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using SistemaVendasWeb.Models.Enums;
 
 namespace SistemaVendasWeb.Services
 {
@@ -49,25 +50,26 @@ namespace SistemaVendasWeb.Services
             return await _context.Funcionarios.OrderBy(obj => obj.Nome).Include(obj => obj.Status).ToListAsync(); 
         }
 
-        public async Task<List<Funcionario>> BuscarPorFiltroAsync(int sFiltro, string txtProcurar)
+        public async Task<List<Funcionario>> BuscarPorFiltroAsync(Filtros sFiltro, string txtProcurar)
         {
             var result = from obj in _context.Funcionarios select obj;
 
             switch (sFiltro)
             {
-                case 1:
+                case Filtros.Nome:
                     result = result.Where(obj => obj.Nome.ToUpper().Contains(txtProcurar.ToUpper()));
                     break;
-                case 2:
+                case Filtros.Email:
                     result = result.Where(obj => obj.Email.ToUpper().Contains(txtProcurar.ToUpper()));
                     break;
-                case 3:
+                case Filtros.Telefone:
                     result = result.Where(obj => obj.Telefone.ToUpper().Contains(txtProcurar.ToUpper()));
                     break;
                 default:
                     Console.WriteLine("Nenhum filtro selecionado!!");
                     break;
             }
+
             return await result.Include(obj => obj.Status).ToListAsync();
         }
 

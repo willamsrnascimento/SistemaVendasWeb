@@ -27,7 +27,8 @@ namespace SistemaVendasWeb.Controllers
         }
 
         public async Task<IActionResult> Editar(long? id)
-        {
+        {           
+
             if(id == null)
             {
                 return NotFound();
@@ -47,10 +48,17 @@ namespace SistemaVendasWeb.Controllers
         [ValidateAntiForgeryToken] 
         public async Task<IActionResult> Editar(long id, Endereco endereco)
         {
-            if(!(endereco.Id == id))
+           
+            if (!(endereco.Id == id))
             {
                 return BadRequest();
             }
+
+            if (!ModelState.IsValid)
+            {
+                return View(endereco);
+            }
+
             try
             {
                await _enderecoService.AtualizarAsync(endereco);

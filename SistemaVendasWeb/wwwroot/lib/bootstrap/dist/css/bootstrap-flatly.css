@@ -14,10 +14,12 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 .mr-col {
-    margin-left: 3px;
+    margin-left: 10px;
 }
 
-
+.select-search {
+    margin-left: 50px;
+}
 
 html {
   font-family: sans-serif;

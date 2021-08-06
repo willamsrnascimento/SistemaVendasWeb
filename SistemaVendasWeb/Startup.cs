@@ -37,10 +37,11 @@ namespace SistemaVendasWeb
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddAntiforgery();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
-            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<FuncionarioValidator>());
+            services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddDbContext<SistemaVendasWebContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("SistemaVendasWebContext"), builder => builder.MigrationsAssembly("SistemaVendasWeb")));

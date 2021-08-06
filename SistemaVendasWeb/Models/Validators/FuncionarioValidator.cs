@@ -7,14 +7,14 @@ namespace SistemaVendasWeb.Models.Validators
     {
         public FuncionarioValidator()
         {
-            RuleFor(obj => obj.Nome)
+            RuleFor(f => f.Nome)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(5)
                 .MaximumLength(120)
                 .WithName("Nome do Funcionário");
 
-            RuleFor(obj => obj.Email)
+            RuleFor(f => f.Email)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(5)
@@ -22,45 +22,45 @@ namespace SistemaVendasWeb.Models.Validators
                 .EmailAddress()
                 .WithName("E-mail do Funcionário");
 
-            RuleFor(obj => obj.Telefone)
+            RuleFor(f => f.Telefone)
                 .NotEmpty()
                 .NotNull()
                 .MinimumLength(14)
                 .MaximumLength(15)
                 .WithName("Telefone do Funcionário");
 
-            RuleFor(obj => obj.RG)
+            RuleFor(f => f.RG)
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(9)
                 .WithName("RG do Funcionário");
 
-            RuleFor(obj => obj.OrgaoExpedidor)
+            RuleFor(f => f.OrgaoExpedidor)
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(10)
                 .WithName("Orgão Expedidor");
 
-            RuleFor(obj => obj.CPF)
+            RuleFor(f => f.CPF)
                 .NotEmpty()
                 .NotNull()
                 .Length(14)
                 .WithMessage("CPF deve ter exatamente 14 caracteres.")
                 .WithName("CPF do Funcionário");
 
-            RuleFor(obj => obj.NumCarteiraTrabalho)
+            RuleFor(f => f.NumCarteiraTrabalho)
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(15)
                 .WithName("Carteira de Trabalho do Funcionário");
 
-            RuleFor(obj => obj.DataNascimento)
+            RuleFor(f => f.DataNascimento)
                 .NotEmpty()
                 .NotNull()
                 .LessThan(DateTime.Now.AddYears(-18))
                 .WithName("Data de Nascimento");
 
-            RuleFor(obj => obj.Sexo)
+            RuleFor(f => f.Sexo)
                 .NotEmpty()
                 .NotNull()
                 .Must(VerificaSexo)

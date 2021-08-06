@@ -12,23 +12,25 @@
 
 <br />
 
-
 <form class="form-group row-no-gutters" asp-controller="Funcionario" asp-action="Index">
-    <div class="col-sm-7">
-        <a asp-action="Criar" class="btn btn-default">Novo</a>
+    <div class="col-sm-4">
+        <a asp-action="Criar" class="btn btn-default btn-sm">Novo</a>
     </div>
-    <div class="col-md-2 mr-col">
-        <select class="form-control" aria-label="Default select example" name="sFiltro">
-            <option selected value="1">Nome</option>
-            <option value="2">Email</option>
-            <option value="3">Telefone</option>
+    <div class="col-sm-1">
+        Filtro
+    </div>
+    <div class="col-sm-2 select-search">
+        <select class="form-control input-sm" aria-label="Default select example" name="sFiltro">
+            <option selected value="0">Nome</option>
+            <option value="1">Email</option>
+            <option value="2">Telefone</option>
         </select>
     </div>
-    <div class="col-md-2 mr-col">
-        <input class="form-control" type="text" name="txtProcurar">
+    <div class="col-sm-2 mr-col">
+        <input class="form-control input-sm" type="text" name="txtProcurar">
     </div>
-    <div class="mr-col">
-        <button type="submit" class="btn btn-primary mb-2">Filtrar</button>
+    <div class="col-sm-1 mr-col">
+        <button type="submit" class="btn btn-primary btn-sm">Filtrar</button>
     </div>
 </form>
 
@@ -79,10 +81,17 @@
                 <td>
                     <a asp-action="Editar" asp-route-id="@funcionario.Id">Editar</a>
                     <a asp-action="Detalhes" asp-route-id="@funcionario.Id">Detalhes</a>
-                    <a asp-action="Excluir" asp-route-id="@funcionario.Id">Excluir</a>
+                    <a href="#" class="btn-link" data-toggle="modal" data-target="#modalExcluir" onclick="excluirFuncionarioModal(@funcionario.Id, '@funcionario.Nome')">Excluir</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+<p>@ViewData["informacao"]</p>
+
+<partial name="Partials/Modals/_ModalExcluirPartial" />
+
+@section Scripts{
+    <script src="~/js/Funcionario/funcionarioScript.js"></script>   
+}

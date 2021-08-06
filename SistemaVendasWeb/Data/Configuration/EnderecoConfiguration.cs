@@ -10,26 +10,26 @@ namespace SistemaVendasWeb.Data.Configuration
         {
             builder.ToTable("Endereco");
 
-            builder.Property(obj => obj.Rua)
+            builder.Property(e => e.Rua)
                    .HasMaxLength(100);
 
-            builder.Property(obj => obj.Numero)
+            builder.Property(e => e.Numero)
                    .HasMaxLength(10);
 
-            builder.Property(obj => obj.Complemento)
+            builder.Property(e => e.Complemento)
                    .HasMaxLength(100);
 
-            builder.Property(obj => obj.CEP)
+            builder.Property(e => e.CEP)
                    .HasMaxLength(10);
 
-            builder.Property(obj => obj.Bairro)
+            builder.Property(e => e.Bairro)
                    .HasMaxLength(100);
 
-            builder.Property(obj => obj.Cidade)
+            builder.Property(e => e.Cidade)
                    .HasMaxLength(100);
 
-            builder.HasOne(obj => obj.Funcionario)
-                   .WithOne(obj => obj.Endereco)
+            builder.HasOne(e => e.Funcionario)
+                   .WithOne(f => f.Endereco)
                    .OnDelete(DeleteBehavior.SetNull);
         }
     }

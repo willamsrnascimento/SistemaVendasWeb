@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using SistemaVendasWeb.Services;
 using SistemaVendasWeb.Services.Exception;
 using SistemaVendasWeb.Models;
 using SistemaVendasWeb.Models.ViewModels;
 using System.Threading.Tasks;
-using System.Collections;
+using SistemaVendasWeb.Models.Enums;
 
 namespace SistemaVendasWeb.Controllers
 {
@@ -26,23 +25,43 @@ namespace SistemaVendasWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            IEnumerable list = await _funcionariosService.BuscarTodosAsync();
+            List<Funcionario> list = await _funcionariosService.BuscarTodosAsync();
+            
+            if(list == null)
+            {
+                ViewData["informacao"] = "Não há informações a serem exibidas.";
+                list = new List<Funcionario>();
+            }
+
             return View(list);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(int? sFiltro, string txtProcurar)
+        public async Task<IActionResult> Index(Filtros? sFiltro, string txtProcurar)
         {
-            IEnumerable list = null;
+            List<Funcionario> list = null;
 
             if (sFiltro != null && (!String.IsNullOrEmpty(txtProcurar)))
             {
                 list = await _funcionariosService.BuscarPorFiltroAsync(sFiltro.Value, txtProcurar);
+                
+                if(list.Count == 0)
+                {
+                    ViewData["informacao"] = $"O filtro '{sFiltro}' '{txtProcurar}' procurado, não existe.";
+                }
+            
                 return View(list);
             }
 
             list = await _funcionariosService.BuscarTodosAsync();
+
+            if(list == null)
+            {
+                ViewData["informacao"] = "Não há informações a serem exibidas.";
+                list = new List<Funcionario>();
+            }
+
             return View(list);
         }
         public async Task<IActionResult> Criar()
@@ -62,6 +81,7 @@ namespace SistemaVendasWeb.Controllers
                 FuncionarioViewModel viewModel = new FuncionarioViewModel() { Funcionario = funcionario, Statuses = status };
                 return View("Criar", viewModel);
             }
+
             funcionario.Endereco = new Endereco();
             await _funcionariosService.CriarAsync(funcionario);
             return RedirectToAction("Editar", "Endereco", funcionario.Endereco); 
@@ -130,9 +150,26 @@ namespace SistemaVendasWeb.Controllers
 
             Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
 
-            if(funcionario == null)
+            if (funcionario == null)
             {
                 return NotFound();
+            }
+
+            if (funcionario.Endereco == null)
+            {
+                funcionario.Endereco = new Endereco();
+                try
+                {
+                    await _funcionariosService.AtualizarAsync(funcionario);
+                }
+                catch (NotFoundException e)
+                {
+                    throw new NotFoundException(e.Message);
+                }
+                catch (DBUpdateConcurrencyException e)
+                {
+                    throw new NotFoundException(e.Message);
+                }
             }
 
             return View(funcionario);
@@ -155,26 +192,26 @@ namespace SistemaVendasWeb.Controllers
             return View(funcionario);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Excluir(int? id)
+        public async Task<JsonResult> Excluir(int? id)
         {
             if(id == null)
             {
-                return NotFound();
+                return null;
             }
 
             Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
 
             if(funcionario == null)
             {
-                return NotFound();
+                return null;
             }
             
             await _funcionariosService.ExcluirAsync(funcionario.Id);
             await _enderecoService.ExcluirAsync(funcionario.EnderecoId.Value);
 
-            return RedirectToAction(nameof(Index));
+            return Json(funcionario);
         }
     }
 }
