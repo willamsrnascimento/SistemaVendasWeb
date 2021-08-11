@@ -20,13 +20,15 @@ namespace SistemaVendasWeb.Data
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<Status> Status { get; set; }
+        public DbSet<Imagem> Imagens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new EnderecoConfiguration());
-            modelBuilder.ApplyConfiguration(new FuncionarioConfiguration());         
+            modelBuilder.ApplyConfiguration(new FuncionarioConfiguration());
+            modelBuilder.ApplyConfiguration(new ImagemConfiguration());
         }
     }
 }

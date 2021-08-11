@@ -59,20 +59,20 @@ namespace SistemaVendasWeb.Data.Configuration
             builder.Property(p => p.DataNascimento)
                    .IsRequired();
 
-            /* builder.HasOne(obj => obj.Endereco)
-                    .WithMany()
-                    .HasForeignKey("EnderecoId")
-                    .OnDelete(DeleteBehavior.SetNull); */
-
-            builder.HasOne(obj => obj.Endereco)
-                   .WithOne(obj => obj.Funcionario)
-                   .HasForeignKey<Funcionario>(obj => obj.EnderecoId)
+            builder.HasOne(f => f.Endereco)
+                   .WithOne(e => e.Funcionario)
+                   .HasForeignKey<Funcionario>(f => f.EnderecoId)
                    .OnDelete(DeleteBehavior.SetNull);
 
-            builder.HasOne(obj => obj.Status)
+            builder.HasOne(f => f.Status)
                    .WithMany()
                    .HasForeignKey("StatusId")
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(f => f.Imagem)
+                   .WithOne(i => i.Funcionario)
+                   .HasForeignKey<Funcionario>(f => f.ImagemId)
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

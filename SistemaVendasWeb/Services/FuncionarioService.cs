@@ -21,19 +21,25 @@ namespace SistemaVendasWeb.Services
         }
         public async Task CriarAsync(Funcionario funcionario)
         {
+            funcionario.DataInclusao = DateTime.Now;
             _context.Add(funcionario);
             await _context.SaveChangesAsync();
         }
 
         public async Task AtualizarAsync(Funcionario funcionario)
         {
+            funcionario.DataAlteracao = DateTime.Now;
             _context.Funcionarios.Update(funcionario);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Funcionario> BuscarPorIdAsync(long id)
         {
-            Funcionario funcionario = await _context.Funcionarios.Include(obj => obj.Status).Include(obj => obj.Endereco).FirstOrDefaultAsync(obj => obj.Id == id);
+            Funcionario funcionario = await _context.Funcionarios
+                                                        .Include(f => f.Status)
+                                                        .Include(f => f.Endereco)
+                                                        .Include(f => f.Imagem )
+                                                        .FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
                 return null;

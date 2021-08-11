@@ -51,6 +51,7 @@ namespace SistemaVendasWeb
             services.AddScoped<FuncionarioService>();
             services.AddScoped<EnderecoService>();
             services.AddScoped<StatusService>();
+            services.AddScoped<ImagemService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)

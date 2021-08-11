@@ -53,6 +53,15 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
                         .HasMaxLength(100);
 
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataExclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataInclusao")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("Numero")
                         .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
                         .HasMaxLength(10);
@@ -95,6 +104,9 @@ namespace SistemaVendasWeb.Migrations
                         .HasMaxLength(120);
 
                     b.Property<long?>("EnderecoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ImagemId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Login")
@@ -142,9 +154,36 @@ namespace SistemaVendasWeb.Migrations
                     b.HasIndex("EnderecoId")
                         .IsUnique();
 
+                    b.HasIndex("ImagemId")
+                        .IsUnique();
+
                     b.HasIndex("StatusId");
 
                     b.ToTable("Funcionario");
+                });
+
+            modelBuilder.Entity("SistemaVendasWeb.Models.Imagem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("DataAlteracao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataExclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataInclusao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("URL")
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Imagem");
                 });
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Status", b =>
@@ -179,6 +218,11 @@ namespace SistemaVendasWeb.Migrations
                     b.HasOne("SistemaVendasWeb.Models.Endereco", "Endereco")
                         .WithOne("Funcionario")
                         .HasForeignKey("SistemaVendasWeb.Models.Funcionario", "EnderecoId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SistemaVendasWeb.Models.Imagem", "Imagem")
+                        .WithOne("Funcionario")
+                        .HasForeignKey("SistemaVendasWeb.Models.Funcionario", "ImagemId")
                         .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SistemaVendasWeb.Models.Status", "Status")

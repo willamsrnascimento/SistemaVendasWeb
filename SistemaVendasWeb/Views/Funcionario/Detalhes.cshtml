@@ -7,6 +7,17 @@
 <hr />
 
 <partial name="Partials/Funcionario/_FuncionarioDetalhePartial" model="Model" />
-<partial name="Partials/Endereco/_EnderecoDetalhePartial" model="Model.Endereco" />
+
+@if (Model.Endereco == null)
+{
+    <p>
+        Este funcionário não possui Endereço cadastrado.
+    </p>
+}
+else
+{
+    <partial name="Partials/Endereco/_EnderecoDetalhePartial" model="Model.Endereco" />
+}
+
 
 

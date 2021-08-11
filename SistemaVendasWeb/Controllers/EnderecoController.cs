@@ -10,10 +10,12 @@ namespace SistemaVendasWeb.Controllers
     public class EnderecoController : Controller
     {
         private readonly EnderecoService _enderecoService;
+        private readonly FuncionarioService _funcionariosService;
 
-        public EnderecoController(EnderecoService enderecoService)
+        public EnderecoController(EnderecoService enderecoService, FuncionarioService funcionariosService)
         {
-            _enderecoService = enderecoService; 
+            _enderecoService = enderecoService;
+            _funcionariosService = funcionariosService;
         }
 
         public IActionResult Index()
@@ -21,9 +23,16 @@ namespace SistemaVendasWeb.Controllers
             return View();
         }
 
-        public IActionResult Criar()
+        public async Task<IActionResult> Criar(Endereco endereco)
         {
-            return View();
+            return View(endereco);
+        }
+
+        public async Task<IActionResult> CriarEnderecoFuncionario(Funcionario funcionario)
+        {
+            funcionario.Endereco = new Endereco();
+            await _funcionariosService.AtualizarAsync(funcionario);
+            return await Criar(funcionario.Endereco);
         }
 
         public async Task<IActionResult> Editar(long? id)

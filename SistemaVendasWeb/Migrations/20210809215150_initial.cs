@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,11 +32,30 @@ namespace SistemaVendasWeb.Migrations
                     Complemento = table.Column<string>(maxLength: 100, nullable: true),
                     CEP = table.Column<string>(maxLength: 10, nullable: true),
                     Bairro = table.Column<string>(maxLength: 100, nullable: true),
-                    Cidade = table.Column<string>(maxLength: 100, nullable: true)
+                    Cidade = table.Column<string>(maxLength: 100, nullable: true),
+                    DataInclusao = table.Column<DateTime>(nullable: false),
+                    DataExclusao = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Endereco", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Imagem",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    URL = table.Column<string>(maxLength: 300, nullable: true),
+                    DataInclusao = table.Column<DateTime>(nullable: false),
+                    DataExclusao = table.Column<DateTime>(nullable: false),
+                    DataAlteracao = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Imagem", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,16 +86,17 @@ namespace SistemaVendasWeb.Migrations
                     CPF = table.Column<string>(maxLength: 15, nullable: false),
                     Telefone = table.Column<string>(maxLength: 15, nullable: false),
                     RG = table.Column<string>(maxLength: 10, nullable: false),
-                    OrgaoExpedidor = table.Column<string>(maxLength: 5, nullable: false),
                     Sexo = table.Column<string>(nullable: false),
                     Login = table.Column<string>(maxLength: 35, nullable: true),
                     Senha = table.Column<string>(maxLength: 35, nullable: true),
                     EnderecoId = table.Column<long>(nullable: true),
-                    StatusId = table.Column<long>(nullable: false),
-                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    ImagemId = table.Column<long>(nullable: true),
                     DataInclusao = table.Column<DateTime>(nullable: false),
                     DataExclusao = table.Column<DateTime>(nullable: false),
                     DataAlteracao = table.Column<DateTime>(nullable: false),
+                    OrgaoExpedidor = table.Column<string>(maxLength: 5, nullable: false),
+                    StatusId = table.Column<long>(nullable: false),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
                     NumCarteiraTrabalho = table.Column<string>(maxLength: 15, nullable: false)
                 },
                 constraints: table =>
@@ -86,6 +106,12 @@ namespace SistemaVendasWeb.Migrations
                         name: "FK_Funcionario_Endereco_EnderecoId",
                         column: x => x.EnderecoId,
                         principalTable: "Endereco",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Funcionario_Imagem_ImagemId",
+                        column: x => x.ImagemId,
+                        principalTable: "Imagem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -100,6 +126,12 @@ namespace SistemaVendasWeb.Migrations
                 name: "IX_Funcionario_EnderecoId",
                 table: "Funcionario",
                 column: "EnderecoId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Funcionario_ImagemId",
+                table: "Funcionario",
+                column: "ImagemId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -118,6 +150,9 @@ namespace SistemaVendasWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "Endereco");
+
+            migrationBuilder.DropTable(
+                name: "Imagem");
 
             migrationBuilder.DropTable(
                 name: "Status");

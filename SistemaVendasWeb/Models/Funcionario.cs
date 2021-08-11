@@ -14,8 +14,8 @@ namespace SistemaVendasWeb.Models
         {
 
         }
-        public Funcionario(long id, string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao, string numCarteiraTrabalho) 
-            : base(id, nome, email, cpf, telefone, rg, orgaoExpedidor, sexo, login, senha, endereco, status, dataNascimento, dataInclusao, dataExclusao, dataAlteracao)
+        public Funcionario(long id, string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, Imagem imagem, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao, string numCarteiraTrabalho) 
+            : base(id, nome, email, cpf, telefone, rg, orgaoExpedidor, sexo, login, senha, endereco, status, imagem, dataNascimento, dataInclusao, dataExclusao, dataAlteracao)
         {
             NumCarteiraTrabalho = numCarteiraTrabalho;
         }

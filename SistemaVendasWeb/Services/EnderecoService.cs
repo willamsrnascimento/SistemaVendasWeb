@@ -3,6 +3,7 @@ using SistemaVendasWeb.Models;
 using System.Linq;
 using SistemaVendasWeb.Services.Exception;
 using SistemaVendasWeb.Repository;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,7 @@ namespace SistemaVendasWeb.Services
 
             try
             {
+                endereco.DataAlteracao = DateTime.Now;
                 _context.Enderecos.Update(endereco);
                 await _context.SaveChangesAsync();
             }

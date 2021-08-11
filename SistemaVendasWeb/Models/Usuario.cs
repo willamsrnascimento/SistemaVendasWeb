@@ -21,6 +21,8 @@ namespace SistemaVendasWeb.Models
         public Endereco Endereco { get; set; }
         public long? EnderecoId { get; set; }
         public Status Status { get; set; }
+        public Imagem Imagem { get; set; }
+        public long? ImagemId { get; set; }
         public DateTime DataInclusao { get; set; }
         public DateTime DataExclusao { get; set; }
         public DateTime DataAlteracao { get; set; }
@@ -41,7 +43,7 @@ namespace SistemaVendasWeb.Models
         {
 
         }
-        public Usuario(long id, string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
+        public Usuario(long id, string nome, string email, string cpf, string telefone, string rg, string orgaoExpedidor, char sexo, string login, string senha, Endereco endereco, Status status, Imagem imagem, DateTime dataNascimento, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
         {
             Id = id;
             Nome = nome;
@@ -53,6 +55,7 @@ namespace SistemaVendasWeb.Models
             Sexo = sexo;
             Login = login;
             Senha = senha;
+            Imagem = imagem;
             DataNascimento = dataNascimento;
             DataInclusao = dataInclusao;
             DataExclusao = dataExclusao;

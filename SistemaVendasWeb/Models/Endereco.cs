@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 namespace SistemaVendasWeb.Models
 {
     public class Endereco
@@ -11,6 +11,9 @@ namespace SistemaVendasWeb.Models
         public string Bairro { get; set; }
         public string Cidade { get; set; }
         public Funcionario Funcionario { get; set; }
+        public DateTime DataInclusao { get; set; }
+        public DateTime DataExclusao { get; set; }
+        public DateTime DataAlteracao { get; set; }
 
         public Endereco()
         {

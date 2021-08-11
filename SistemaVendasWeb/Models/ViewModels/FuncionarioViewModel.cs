@@ -8,7 +8,7 @@ namespace SistemaVendasWeb.Models.ViewModels
     public class FuncionarioViewModel
     {
         public Funcionario Funcionario { get; set; }
-        public List<Status> Statuses { get; set; }
-
+        public List<Status> Status { get; set; }
+        public Imagem Imagem { get; set; }
     }
 }
