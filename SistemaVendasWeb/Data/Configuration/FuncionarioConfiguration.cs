@@ -34,14 +34,6 @@ namespace SistemaVendasWeb.Data.Configuration
                    .IsRequired()
                    .HasMaxLength(10);
 
-            builder.Property(p => p.RG)
-                   .IsRequired()
-                   .HasMaxLength(10);
-
-            builder.Property(p => p.RG)
-                   .IsRequired()
-                   .HasMaxLength(10);
-
             builder.Property(p => p.OrgaoExpedidor)
                    .IsRequired()
                    .HasMaxLength(5);

@@ -84,7 +84,7 @@ namespace SistemaVendasWeb.Services
             Funcionario funcionario = await _context.Funcionarios.FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
-                throw new NotFoundException("Funcionario not found!");
+                throw new NotFoundException("Exclir: Funcionario não encontrado!");
             }
 
             try

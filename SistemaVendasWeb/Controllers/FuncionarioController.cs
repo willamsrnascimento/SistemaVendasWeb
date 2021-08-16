@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using SistemaVendasWeb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace SistemaVendasWeb.Controllers
 {
@@ -18,15 +19,13 @@ namespace SistemaVendasWeb.Controllers
         private readonly StatusService _statusService;
         private readonly EnderecoService _enderecoService;
         private readonly ImagemService _imagemService;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public FuncionarioController(FuncionarioService funcionariosService, StatusService statusService, EnderecoService enderecoService, ImagemService imagemService, IWebHostEnvironment webHostEnvironment)
+        public FuncionarioController(FuncionarioService funcionariosService, StatusService statusService, EnderecoService enderecoService, ImagemService imagemService)
         {
             _funcionariosService = funcionariosService;
             _statusService = statusService;
             _enderecoService = enderecoService;
             _imagemService = imagemService;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -74,7 +73,7 @@ namespace SistemaVendasWeb.Controllers
         {
             var status = await _statusService.BuscarTodosAsync();
             Imagem imagem = new Imagem() { URL = "~/images/funcionario/default.png" };
-            var viewModel = new FuncionarioViewModel() {Status = status, Imagem = imagem};
+            var viewModel = new FuncionarioViewModel() {Status = status, Imagem = imagem };
 
             return View(viewModel);
         }
@@ -92,14 +91,15 @@ namespace SistemaVendasWeb.Controllers
                 }
                 else
                 {
-                   funcionario.Imagem = await Util.ImagemUtil.ProcessaImagem(imagem, _webHostEnvironment);
+                   funcionario.Imagem = await _imagemService.ProcessaImagem(imagem);
                    await _funcionariosService.CriarAsync(funcionario);
-                   ViewData["informacao"] = "Usuário Cadastrado com sucesso.";
+                   ViewData["informacao"] = "Usuário cadastrado com sucesso.";
                 }                
             }
             else
             {
                 ViewData["informacao"] = "Favor preencher as informações corretamente.";
+                funcionario.Imagem = new Imagem() { URL = "~/images/funcionario/default.png" };
             }
 
             var status = await _statusService.BuscarTodosAsync();
@@ -112,11 +112,21 @@ namespace SistemaVendasWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AdicionarEndereco(long? id, Funcionario funcionario)
         {
+            
             if (!ModelState.IsValid || id == null || id == 0)
             {
                 ViewData["informacao"] = "Funcionário ainda não registrado. Favor primeiro preencher as informações e salvar.";
                 var status = await _statusService.BuscarTodosAsync();
-                return View("Criar", new FuncionarioViewModel() { Funcionario = funcionario, Status = status });
+                Imagem imagem = new Imagem() { URL = "~/images/funcionario/default.png" };
+                FuncionarioViewModel viewModel = new FuncionarioViewModel() { Funcionario = funcionario, Status = status, Imagem = imagem };
+                return View("Criar", viewModel);
+            }
+
+            funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+
+            if(funcionario == null)
+            {
+                return BadRequest();
             }
 
             funcionario.Endereco = new Endereco();
@@ -246,6 +256,11 @@ namespace SistemaVendasWeb.Controllers
             if(funcionario.EnderecoId != null)
             {
                 await _enderecoService.ExcluirAsync(funcionario.EnderecoId.Value);
+            }
+
+            if(funcionario.ImagemId != null)
+            {
+                await _imagemService.ExcluirAsync(funcionario.ImagemId.Value);
             }
 
             return RedirectToAction("Index", "Funcionario");

@@ -24,7 +24,7 @@ namespace SistemaVendasWeb.Data
                 return;
             }
 
-            Imagem i1 = new Imagem(1, "~/images/funcionario/default.png", new DateTime(2021, 05, 21), new DateTime(), new DateTime());
+            Imagem i1 = new Imagem(1, "defaul", "default","~/images/funcionario/default.png", new DateTime(2021, 05, 21), new DateTime(), new DateTime());
 
             Status s1 = new Status(1, 'A', "Ativo", new DateTime(2021, 05, 21), new DateTime(), new DateTime());
             Status s2 = new Status(2, 'I', "Inativo", new DateTime(2021, 05, 21), new DateTime(), new DateTime());

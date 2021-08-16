@@ -34,7 +34,7 @@ namespace SistemaVendasWeb.Models
         public long StatusId { get; set; }
 
         [Display(Name = "Data de Nascimento")]
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
 
 

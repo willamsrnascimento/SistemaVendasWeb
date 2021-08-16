@@ -177,13 +177,18 @@ namespace SistemaVendasWeb.Migrations
                     b.Property<DateTime>("DataInclusao")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Nome")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("NomeGuia")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
                     b.Property<string>("URL")
-                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
-                        .HasMaxLength(300);
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Imagem");
+                    b.ToTable("Imagens");
                 });
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Status", b =>

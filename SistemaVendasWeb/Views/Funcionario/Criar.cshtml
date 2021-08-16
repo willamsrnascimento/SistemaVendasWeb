@@ -6,13 +6,14 @@
 
 <hr />
 
-<p>@ViewData["informacao"]</p>
+<p id="formulario-resposta">@ViewData["informacao"]</p>
 
-<div class="row">
+<div class="row" before>
     <div>
         <form asp-controller="Funcionario" enctype="multipart/form-data">
             <div class="col-sm-7">
-                <input type="hidden" asp-for="Funcionario.Id" name="id" />
+                <input type="hidden" asp-for="Funcionario.Id" name="id" id="id-funcionario" />
+
                 <div class="form-group">
                     <label asp-for="Funcionario.Nome" class="control-label"></label>
                     <input asp-for="Funcionario.Nome" class="form-control" />
@@ -45,7 +46,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Funcionario.NumCarteiraTrabalho" class="control-label"></label>
-                    <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control" />
+                    <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control form-funcionario" />
                     <span asp-validation-for="Funcionario.NumCarteiraTrabalho" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -66,8 +67,8 @@
                     <select asp-for="Funcionario.StatusId" asp-items="@(new SelectList(Model.Status, "Id", "Descricao"))" class="form-control"></select>
                 </div>
                 <div class="form-group">
-                    <input asp-action="Criar" type="submit" value="Salvar" class="btn btn-sm btn-default" />
-                    <input asp-action="AdicionarEndereco" type="submit" value="Incluir Endereço" class="btn btn-sm btn-primary" />
+                    <input asp-action="Criar" type="submit" value="Salvar" class="btn btn-sm btn-success" id="botao-cria-funcionario" />
+                    <input asp-action="AdicionarEndereco" type="submit" value="Incluir Endereço" id="botao-adicionar-endereco-funcionario" class="btn btn-sm btn-primary" />
                     <a asp-action="Index" class="btn btn-sm btn-link">Voltar</a>
                 </div>
             </div>
@@ -82,6 +83,6 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/funcionario/funcionarioCriarScript.js"></script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="~/js/Funcionario/funcionarioScript.js"></script>
 }

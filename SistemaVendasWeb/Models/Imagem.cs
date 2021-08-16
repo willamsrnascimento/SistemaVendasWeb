@@ -8,7 +8,9 @@ namespace SistemaVendasWeb.Models
     public class Imagem
     {
         public long Id { get; set; }
-        public string URL { get; set; }
+        public string Nome { get; set; }
+        public string NomeGuia { get; set; }
+        public string URL { get; set; } 
         public Funcionario Funcionario { get; set; }
         public DateTime DataInclusao { get; set; }
         public DateTime DataExclusao { get; set; }
@@ -18,9 +20,11 @@ namespace SistemaVendasWeb.Models
         {
         }
 
-        public Imagem(long id, string url, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
+        public Imagem(long id, string nome, string nomeGuia, string url, DateTime dataInclusao, DateTime dataExclusao, DateTime dataAlteracao)
         {
             Id = id;
+            Nome = nome;
+            NomeGuia = nomeGuia;
             URL = url;
             DataInclusao = dataInclusao;
             DataExclusao = dataExclusao;

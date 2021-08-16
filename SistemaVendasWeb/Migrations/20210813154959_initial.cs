@@ -43,19 +43,21 @@ namespace SistemaVendasWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Imagem",
+                name: "Imagens",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    URL = table.Column<string>(maxLength: 300, nullable: true),
+                    Nome = table.Column<string>(nullable: true),
+                    NomeGuia = table.Column<string>(nullable: true),
+                    URL = table.Column<string>(nullable: true),
                     DataInclusao = table.Column<DateTime>(nullable: false),
                     DataExclusao = table.Column<DateTime>(nullable: false),
                     DataAlteracao = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Imagem", x => x.Id);
+                    table.PrimaryKey("PK_Imagens", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,9 +111,9 @@ namespace SistemaVendasWeb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Funcionario_Imagem_ImagemId",
+                        name: "FK_Funcionario_Imagens_ImagemId",
                         column: x => x.ImagemId,
-                        principalTable: "Imagem",
+                        principalTable: "Imagens",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -152,7 +154,7 @@ namespace SistemaVendasWeb.Migrations
                 name: "Endereco");
 
             migrationBuilder.DropTable(
-                name: "Imagem");
+                name: "Imagens");
 
             migrationBuilder.DropTable(
                 name: "Status");

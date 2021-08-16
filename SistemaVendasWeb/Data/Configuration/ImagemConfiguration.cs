@@ -10,8 +10,14 @@ namespace SistemaVendasWeb.Data.Configuration
         {
             builder.ToTable("Imagem");
 
+            builder.Property(i => i.Nome)
+                .HasMaxLength(60);
+
+            builder.Property(i => i.NomeGuia)
+                .HasMaxLength(120);
+
             builder.Property(i => i.URL)
-                .HasMaxLength(300);
+                .HasMaxLength(350);
         }
     }
 }

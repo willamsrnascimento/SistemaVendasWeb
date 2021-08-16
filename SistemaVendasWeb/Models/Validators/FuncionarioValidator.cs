@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using System;
+using System.Globalization;
 
 namespace SistemaVendasWeb.Models.Validators
 {
@@ -38,7 +39,7 @@ namespace SistemaVendasWeb.Models.Validators
             RuleFor(f => f.OrgaoExpedidor)
                 .NotEmpty()
                 .NotNull()
-                .MaximumLength(10)
+                .MaximumLength(5)
                 .WithName("Orgão Expedidor");
 
             RuleFor(f => f.CPF)
@@ -52,12 +53,13 @@ namespace SistemaVendasWeb.Models.Validators
                 .NotEmpty()
                 .NotNull()
                 .MaximumLength(15)
-                .WithName("Carteira de Trabalho do Funcionário");
+                .WithName("Carteira de Trabalho do Funcionário.");
 
             RuleFor(f => f.DataNascimento)
                 .NotEmpty()
                 .NotNull()
                 .LessThan(DateTime.Now.AddYears(-18))
+                .WithMessage("Você precisa ser maior de 18 anos.")
                 .WithName("Data de Nascimento");
 
             RuleFor(f => f.Sexo)
@@ -71,6 +73,20 @@ namespace SistemaVendasWeb.Models.Validators
         private bool VerificaSexo(char sexo)
         {
             return sexo == 'M' || sexo == 'F';
+        }
+
+        private bool VerificaDataNascimento(DateTime date)
+        {
+            DateTime data1 = DateTime.Now.AddYears(-18);
+            if(date <= data1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //return date <= DateTime.Now.AddYears(-18);
         }
     }
 }

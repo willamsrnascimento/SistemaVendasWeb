@@ -4,12 +4,6 @@
     $("#idFuncionario").val(id)
 }
 
-$('document').ready(function () {
-    $(".input-imagem").change(function (event) {
-        var link = URL.createObjectURL(event.target.files[0]);
-        $(".imagem-mostrar").attr('src', link)
-    })
-});
 
 
     

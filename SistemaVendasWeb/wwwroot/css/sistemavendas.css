@@ -6,3 +6,15 @@
     width:400px;
     height:400px
 }
+
+select[readonly] {
+    background: #eee; 
+    pointer-events: none;
+    touch-action: none;
+}
+
+.date[readonly] {
+    background: #eee;
+    pointer-events: none;
+    touch-action: none;
+}
