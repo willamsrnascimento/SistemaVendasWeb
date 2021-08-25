@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaVendasWeb.Data;
@@ -9,67 +10,55 @@ using SistemaVendasWeb.Data;
 namespace SistemaVendasWeb.Migrations
 {
     [DbContext(typeof(SistemaVendasWebContext))]
-    [Migration("20210813154959_initial")]
-    partial class initial
+    [Migration("20210823181254_Initial20210823")]
+    partial class Initial20210823
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 64);
-
-            modelBuilder.Entity("SistemaVendasWeb.Models.ClasseTeste", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ClasseTeste");
-                });
+                .HasAnnotation("ProductVersion", "3.1.3")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Endereco", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Bairro")
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("CEP")
-                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("Cidade")
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Complemento")
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataExclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Numero")
-                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("Rua")
-                        .HasColumnType("varchar(100) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
@@ -81,28 +70,29 @@ namespace SistemaVendasWeb.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
                     b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataExclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataNascimento")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("varchar(120) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(120)")
                         .HasMaxLength(120);
 
                     b.Property<long?>("EnderecoId")
@@ -112,52 +102,54 @@ namespace SistemaVendasWeb.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Login")
-                        .HasColumnType("varchar(35) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(35)")
                         .HasMaxLength(35);
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("varchar(120) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(120)")
                         .HasMaxLength(120);
 
                     b.Property<string>("NumCarteiraTrabalho")
                         .IsRequired()
-                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
                     b.Property<string>("OrgaoExpedidor")
                         .IsRequired()
-                        .HasColumnType("varchar(5) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(5)")
                         .HasMaxLength(5);
 
                     b.Property<string>("RG")
                         .IsRequired()
-                        .HasColumnType("varchar(10) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
                     b.Property<string>("Senha")
-                        .HasColumnType("varchar(35) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(35)")
                         .HasMaxLength(35);
 
                     b.Property<string>("Sexo")
                         .IsRequired()
-                        .HasColumnType("varchar(1) CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<long>("StatusId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Telefone")
                         .IsRequired()
-                        .HasColumnType("varchar(15) CHARACTER SET utf8mb4")
+                        .HasColumnType("nvarchar(15)")
                         .HasMaxLength(15);
 
                     b.HasKey("Id");
 
                     b.HasIndex("EnderecoId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[EnderecoId] IS NOT NULL");
 
                     b.HasIndex("ImagemId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ImagemId] IS NOT NULL");
 
                     b.HasIndex("StatusId");
 
@@ -168,52 +160,57 @@ namespace SistemaVendasWeb.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataExclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(60);
 
                     b.Property<string>("NomeGuia")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(120);
 
                     b.Property<string>("URL")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(350)")
+                        .HasMaxLength(350);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Imagens");
+                    b.ToTable("Imagem");
                 });
 
             modelBuilder.Entity("SistemaVendasWeb.Models.Status", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Abreviacao")
                         .IsRequired()
-                        .HasColumnType("varchar(1) CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<DateTime>("DataAlteracao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataExclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DataInclusao")
-                        .HasColumnType("datetime(6)");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

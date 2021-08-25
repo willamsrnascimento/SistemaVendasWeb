@@ -10,6 +10,7 @@ using SistemaVendasWeb.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Text;
 
 namespace SistemaVendasWeb.Controllers
 {
@@ -69,6 +70,28 @@ namespace SistemaVendasWeb.Controllers
 
             return View(list);
         }
+
+        public async Task<IActionResult> Exportar()
+        {
+            List<Funcionario> funcionarios = await _funcionariosService.BuscarTodosAsync();
+            StringBuilder dados = new StringBuilder();
+            dados.AppendLine("Nome;CPF;RG;Orgão Expedidor;E-mail;Telefone;Sexo;Endereço;Status");
+
+            foreach(Funcionario funcionario in funcionarios)
+            {
+                string endereco = "";
+
+                if(funcionario.Endereco != null)
+                {
+                    endereco = $"{funcionario.Endereco.Rua}, {funcionario.Endereco.Numero}, {funcionario.Endereco.Complemento}, {funcionario.Endereco.Bairro}, {funcionario.Endereco.Cidade} - {funcionario.Endereco.CEP}";
+                }
+
+                dados.AppendLine($"{funcionario.Nome};{funcionario.CPF};{funcionario.RG};{funcionario.OrgaoExpedidor};{funcionario.Email};{funcionario.Telefone};{((funcionario.Sexo) == 'M' ? "Masculino" : "Feminino")};{endereco};{funcionario.Status.Descricao}");
+            }
+
+            return File(Encoding.ASCII.GetBytes(dados.ToString()), "text/csv", $"RelFuncionarios_{DateTime.Now.ToString("yyyyMMdd")}.csv");
+        }
+
         public async Task<IActionResult> Criar()
         {
             var status = await _statusService.BuscarTodosAsync();

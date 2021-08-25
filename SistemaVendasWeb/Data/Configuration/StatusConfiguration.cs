@@ -1,6 +1,7 @@
 ﻿using SistemaVendasWeb.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
 
 namespace SistemaVendasWeb.Data.Configuration
 {
@@ -10,13 +11,21 @@ namespace SistemaVendasWeb.Data.Configuration
         {
             builder.ToTable("Status");
 
-            builder.Property(obj => obj.Abreviacao)
+            builder.Property(s => s.Abreviacao)
                    .IsRequired();
 
-            builder.Property(obj => obj.Descricao)
+            builder.Property(s => s.Descricao)
                    .IsRequired()
                    .HasMaxLength(100);
-       
+
+            builder.Property(s => s.DataInclusao)
+                   .IsRequired();
+
+            builder.Property(s => s.DataAlteracao);
+
+            builder.Property(s => s.DataExclusao);
+
+
         }
     }
 }

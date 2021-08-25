@@ -1,32 +1,18 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SistemaVendasWeb.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial20210823 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ClasseTeste",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClasseTeste", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Endereco",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Rua = table.Column<string>(maxLength: 100, nullable: true),
                     Numero = table.Column<string>(maxLength: 10, nullable: true),
                     Complemento = table.Column<string>(maxLength: 100, nullable: true),
@@ -43,21 +29,21 @@ namespace SistemaVendasWeb.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Imagens",
+                name: "Imagem",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    NomeGuia = table.Column<string>(nullable: true),
-                    URL = table.Column<string>(nullable: true),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(maxLength: 60, nullable: true),
+                    NomeGuia = table.Column<string>(maxLength: 120, nullable: true),
+                    URL = table.Column<string>(maxLength: 350, nullable: true),
                     DataInclusao = table.Column<DateTime>(nullable: false),
                     DataExclusao = table.Column<DateTime>(nullable: false),
                     DataAlteracao = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Imagens", x => x.Id);
+                    table.PrimaryKey("PK_Imagem", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,7 +51,7 @@ namespace SistemaVendasWeb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Abreviacao = table.Column<string>(nullable: false),
                     Descricao = table.Column<string>(nullable: true),
                     DataInclusao = table.Column<DateTime>(nullable: false),
@@ -82,7 +68,7 @@ namespace SistemaVendasWeb.Migrations
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(maxLength: 120, nullable: false),
                     Email = table.Column<string>(maxLength: 120, nullable: false),
                     CPF = table.Column<string>(maxLength: 15, nullable: false),
@@ -111,9 +97,9 @@ namespace SistemaVendasWeb.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
-                        name: "FK_Funcionario_Imagens_ImagemId",
+                        name: "FK_Funcionario_Imagem_ImagemId",
                         column: x => x.ImagemId,
-                        principalTable: "Imagens",
+                        principalTable: "Imagem",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
@@ -128,13 +114,15 @@ namespace SistemaVendasWeb.Migrations
                 name: "IX_Funcionario_EnderecoId",
                 table: "Funcionario",
                 column: "EnderecoId",
-                unique: true);
+                unique: true,
+                filter: "[EnderecoId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionario_ImagemId",
                 table: "Funcionario",
                 column: "ImagemId",
-                unique: true);
+                unique: true,
+                filter: "[ImagemId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Funcionario_StatusId",
@@ -145,16 +133,13 @@ namespace SistemaVendasWeb.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClasseTeste");
-
-            migrationBuilder.DropTable(
                 name: "Funcionario");
 
             migrationBuilder.DropTable(
                 name: "Endereco");
 
             migrationBuilder.DropTable(
-                name: "Imagens");
+                name: "Imagem");
 
             migrationBuilder.DropTable(
                 name: "Status");

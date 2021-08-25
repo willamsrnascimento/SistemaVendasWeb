@@ -53,7 +53,10 @@ namespace SistemaVendasWeb.Services
             {
                 return null;
             }
-            return await _context.Funcionarios.OrderBy(obj => obj.Nome).Include(obj => obj.Status).ToListAsync(); 
+            return await _context.Funcionarios.OrderBy(f => f.Nome)
+                                              .Include(f => f.Endereco)
+                                              .Include(f => f.Status)
+                                              .ToListAsync(); 
         }
 
         public async Task<List<Funcionario>> BuscarPorFiltroAsync(Filtros sFiltro, string txtProcurar)

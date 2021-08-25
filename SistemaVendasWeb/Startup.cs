@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,7 +9,6 @@ using SistemaVendasWeb.Data;
 using SistemaVendasWeb.Services;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
-using SistemaVendasWeb.Models.Validators;
 
 namespace SistemaVendasWeb
 {
@@ -44,8 +38,9 @@ namespace SistemaVendasWeb
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddDbContext<SistemaVendasWebContext>(options =>
-                    options.UseMySql(Configuration.GetConnectionString("SistemaVendasWebContext"), builder => builder.MigrationsAssembly("SistemaVendasWeb")));
-            //options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasWebContext")));
+                     options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasWebDB")));
+            //options.UseMySql(Configuration.GetConnectionString("SistemaVendasWebContext"), builder => builder.MigrationsAssembly("SistemaVendasWeb")));
+
 
             services.AddScoped<SeedingService>();
             services.AddScoped<FuncionarioService>();
@@ -54,12 +49,11 @@ namespace SistemaVendasWeb
             services.AddScoped<ImagemService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedingService seedingService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                seedingService.Seed();
             }
             else
             {
