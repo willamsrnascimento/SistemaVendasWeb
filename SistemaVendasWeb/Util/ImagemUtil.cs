@@ -27,6 +27,12 @@ namespace SistemaVendasWeb.Util
                     imagem.URL = "~/images/funcionario/" + nomeImage;
                 }
             }
+            else
+            {
+                imagem.DataInclusao = DateTime.Now;
+                imagem.URL = "~/images/funcionario/default.png";
+            }
+
             return imagem;
         }
 

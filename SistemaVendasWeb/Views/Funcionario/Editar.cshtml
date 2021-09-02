@@ -2,69 +2,81 @@
 
 <h2>Funcionários</h2>
 
-<p>Atualizar Cadastro de Funcionários</p>
+<p>Cadastro de Funcionários</p>
 
 <hr />
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Editar">
-            <input class="hidden" asp-for="Funcionario.Id" />
-            <input class="hidden" asp-for="Funcionario.EnderecoId" />
-            <div class="form-group">
-                <label asp-for="Funcionario.Nome" class="control-label"></label>
-                <input asp-for="Funcionario.Nome" class="form-control" />
-                <span asp-validation-for="Funcionario.Nome" class="text-danger"></span>
+<p id="formulario-resposta">@ViewData["informacao"]</p>
+
+<div class="row" before>
+    <div>
+        <form asp-controller="Funcionario" enctype="multipart/form-data">
+            <div class="col-sm-7">
+                <input type="hidden" asp-for="Funcionario.Id"/>
+
+                <div class="form-group">
+                    <label asp-for="Funcionario.Nome" class="control-label"></label>
+                    <input asp-for="Funcionario.Nome" class="form-control" />
+                    <span asp-validation-for="Funcionario.Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.Email" class="control-label"></label>
+                    <input asp-for="Funcionario.Email" class="form-control" />
+                    <span asp-validation-for="Funcionario.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.Telefone" class="control-label"></label>
+                    <input asp-for="Funcionario.Telefone" class="form-control" id="telefone" />
+                    <span asp-validation-for="Funcionario.Telefone" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.RG" class="control-label"></label>
+                    <input asp-for="Funcionario.RG" class="form-control" id="rg" />
+                    <span asp-validation-for="Funcionario.RG" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.OrgaoExpedidor" class="control-label"></label>
+                    <input asp-for="Funcionario.OrgaoExpedidor" class="form-control" />
+                    <span asp-validation-for="Funcionario.OrgaoExpedidor" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.CPF" class="control-label"></label>
+                    <input asp-for="Funcionario.CPF" class="form-control" id="cpf" />
+                    <span asp-validation-for="Funcionario.CPF" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.NumCarteiraTrabalho" class="control-label"></label>
+                    <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control form-funcionario" />
+                    <span asp-validation-for="Funcionario.NumCarteiraTrabalho" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.DataNascimento" class="control-label"></label>
+                    <input asp-for="Funcionario.DataNascimento" class="form-control" />
+                    <span asp-validation-for="Funcionario.DataNascimento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.Sexo" class="control-label"></label>
+                    <select asp-for="Funcionario.Sexo" class="form-control" id="select">
+                        <option value="M">Masculino</option>
+                        <option value="F">Feminino</option>
+                    </select>
+                    <span asp-validation-for="Funcionario.Sexo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Funcionario.StatusId" class="control-label"></label>
+                    <select asp-for="Funcionario.StatusId" asp-items="@(new SelectList(Model.Status, "Id", "Descricao"))" class="form-control"></select>
+                </div>
+                <div class="form-group">
+                    <input asp-action="Editar" type="submit" value="Salvar" class="btn btn-sm btn-success" id="botao-cria-funcionario" />
+                    <a asp-action="AdicionarEndereco" asp-route-id="@(Model.Funcionario.Id)" class="btn btn-sm btn-primary" id="botao-adicionar-endereco-funcionario">Atualizar Endereço</a>
+                    <a asp-action="Index" class="btn btn-sm btn-link">Voltar</a>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.Email" class="control-label"></label>
-                <input asp-for="Funcionario.Email" class="form-control" />
-                <span asp-validation-for="Funcionario.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.Telefone" class="control-label"></label>
-                <input asp-for="Funcionario.Telefone" class="form-control" id="telefone" />
-                <span asp-validation-for="Funcionario.Telefone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.RG" class="control-label"></label>
-                <input asp-for="Funcionario.RG" class="form-control" id="rg"/>
-                <span asp-validation-for="Funcionario.RG" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.OrgaoExpedidor" class="control-label"></label>
-                <input asp-for="Funcionario.OrgaoExpedidor" class="form-control" />
-                <span asp-validation-for="Funcionario.OrgaoExpedidor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.CPF" class="control-label"></label>
-                <input asp-for="Funcionario.CPF" class="form-control" id="cpf"/>
-                <span asp-validation-for="Funcionario.CPF" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.NumCarteiraTrabalho" class="control-label"></label>
-                <input asp-for="Funcionario.NumCarteiraTrabalho" class="form-control" />
-                <span asp-validation-for="Funcionario.NumCarteiraTrabalho" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.DataNascimento" class="control-label"></label>
-                <input asp-for="Funcionario.DataNascimento" class="form-control" />
-                <span asp-validation-for="Funcionario.DataNascimento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.Sexo" class="control-label"></label>
-                <select asp-for="Funcionario.Sexo" class="form-control" id="select">
-                    <option value="M">Masculino</option>
-                    <option value="F">Feminino</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Funcionario.StatusId" class="control-label"></label>
-                <select asp-for="Funcionario.StatusId" asp-items="@(new SelectList(Model.Status, "Id", "Descricao"))" class="form-control"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Próximo ..." class="btn btn-default" />
-                <a asp-action="Index" class="btn btn-link">Voltar</a>
+            <div class="col-sm-5">
+                <div class="div-image-funcionario">
+                    <img src="@Url.Content(Model.Funcionario.Imagem.URL)" class="img-thumbnail img-responsive imagem-mostrar" width="400" height="400" />
+                    <input style="padding-top:10px" type="file" name="imagem" accept="image/jpeg, image/png" class="input-imagem" />
+                </div>
             </div>
         </form>
     </div>

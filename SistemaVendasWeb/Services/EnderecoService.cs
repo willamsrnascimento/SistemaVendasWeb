@@ -43,7 +43,7 @@ namespace SistemaVendasWeb.Services
 
         public async Task<Endereco> BuscarPorIdAsync(long id)
         {
-            return await _context.Enderecos.FirstOrDefaultAsync(obj => obj.Id == id);
+            return await _context.Enderecos.FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async Task<List<Endereco>> BuscarTodosAsync()

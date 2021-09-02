@@ -18,3 +18,19 @@ select[readonly] {
     pointer-events: none;
     touch-action: none;
 }
+
+.imagem-perfil {
+    height: 300px;
+    width: 300px;
+    border-radius: 50%;
+}
+
+.div-dados-funcionario {
+    float: left;
+    padding-top: 25px;
+    padding: 20px;
+}
+
+.div-img-dt-funcionario {
+    padding-left: 60px;
+}

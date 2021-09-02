@@ -12,7 +12,7 @@
     <div>
         <form asp-controller="Funcionario" enctype="multipart/form-data">
             <div class="col-sm-7">
-                <input type="hidden" asp-for="Funcionario.Id" name="id" id="id-funcionario" />
+                <input type="hidden" value="@((Model.Funcionario) == null ? 0 : Model.Funcionario.Id)" id="id-funcionario" />
 
                 <div class="form-group">
                     <label asp-for="Funcionario.Nome" class="control-label"></label>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <input asp-action="Criar" type="submit" value="Salvar" class="btn btn-sm btn-success" id="botao-cria-funcionario" />
-                    <input asp-action="AdicionarEndereco" type="submit" value="Incluir Endereço" id="botao-adicionar-endereco-funcionario" class="btn btn-sm btn-primary" />
+                    <a asp-action="AdicionarEndereco" asp-route-id="@((Model.Funcionario) == null ? 0 : Model.Funcionario.Id)" class="btn btn-sm btn-primary" id="botao-adicionar-endereco-funcionario">Incluir Endereço</a>                   
                     <a asp-action="Index" class="btn btn-sm btn-link">Voltar</a>
                 </div>
             </div>

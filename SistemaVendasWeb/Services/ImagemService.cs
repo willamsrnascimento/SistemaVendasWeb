@@ -23,14 +23,28 @@ namespace SistemaVendasWeb.Services
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public Task AtualizarAsync(Imagem t)
+        public async Task AtualizarAsync(Imagem imagem)
         {
-            throw new NotImplementedException();
+            if (!_context.Imagens.Any(i => i.Id == imagem.Id))
+            {
+                throw new NotFoundException("Id not Found.");
+            }
+
+            try
+            {
+                imagem.DataAlteracao = DateTime.Now;
+                _context.Imagens.Update(imagem);
+                await _context.SaveChangesAsync();
+            }
+            catch (DBUpdateConcurrencyException e)
+            {
+                throw new DBUpdateConcurrencyException(e.Message);
+            }
         }
 
-        public Task<Imagem> BuscarPorIdAsync(long id)
+        public async Task<Imagem> BuscarPorIdAsync(long id)
         {
-            throw new NotImplementedException();
+            return await _context.Imagens.FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public Task<List<Imagem>> BuscarTodosAsync()
@@ -68,6 +82,31 @@ namespace SistemaVendasWeb.Services
         public async Task<Imagem> ProcessaImagem(IFormFile file)
         {
             return await Util.ImagemUtil.ProcessaImagem(file, _webHostEnvironment);
+        }
+
+        public async Task<Imagem> ProcessaImagem(Imagem imagem, IFormFile file)
+        {
+            Imagem imagemAux = await BuscarPorIdAsync(imagem.Id);
+
+            if(file != null)
+            {
+                try
+                {
+                    Util.ImagemUtil.ExcluirImagem(imagemAux, _webHostEnvironment);
+                    imagem = await Util.ImagemUtil.ProcessaImagem(file, _webHostEnvironment);
+                    imagemAux.Nome = imagem.Nome;
+                    imagemAux.NomeGuia = imagem.NomeGuia;
+                    imagemAux.URL = imagem.URL;
+
+                    await AtualizarAsync(imagemAux);
+                }
+                catch (ApplicationException e)
+                {
+                    throw new ApplicationException(e.Message);
+                }
+            }
+
+            return imagemAux;
         }
     }
 }

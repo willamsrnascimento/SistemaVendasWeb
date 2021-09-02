@@ -71,24 +71,29 @@ namespace SistemaVendasWeb.Controllers
             return View(list);
         }
 
-        public async Task<IActionResult> Exportar()
+        public async Task<FileContentResult> Exportar()
         {
             List<Funcionario> funcionarios = await _funcionariosService.BuscarTodosAsync();
+           
+            return GeraCSV(funcionarios);
+        }
+
+        private FileContentResult GeraCSV(List<Funcionario> funcionarios)
+        {
             StringBuilder dados = new StringBuilder();
             dados.AppendLine("Nome;CPF;RG;Orgão Expedidor;E-mail;Telefone;Sexo;Endereço;Status");
 
-            foreach(Funcionario funcionario in funcionarios)
+            foreach (Funcionario funcionario in funcionarios)
             {
                 string endereco = "";
 
-                if(funcionario.Endereco != null)
+                if (funcionario.Endereco != null)
                 {
                     endereco = $"{funcionario.Endereco.Rua}, {funcionario.Endereco.Numero}, {funcionario.Endereco.Complemento}, {funcionario.Endereco.Bairro}, {funcionario.Endereco.Cidade} - {funcionario.Endereco.CEP}";
                 }
 
                 dados.AppendLine($"{funcionario.Nome};{funcionario.CPF};{funcionario.RG};{funcionario.OrgaoExpedidor};{funcionario.Email};{funcionario.Telefone};{((funcionario.Sexo) == 'M' ? "Masculino" : "Feminino")};{endereco};{funcionario.Status.Descricao}");
             }
-
             return File(Encoding.ASCII.GetBytes(dados.ToString()), "text/csv", $"RelFuncionarios_{DateTime.Now.ToString("yyyyMMdd")}.csv");
         }
 
@@ -131,41 +136,39 @@ namespace SistemaVendasWeb.Controllers
             return View("Criar", viewModel);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AdicionarEndereco(long? id, Funcionario funcionario)
+        public async Task<IActionResult> AdicionarEndereco(long? id)
         {
             
-            if (!ModelState.IsValid || id == null || id == 0)
+            if (id == 0 || id == null)
             {
-                ViewData["informacao"] = "Funcionário ainda não registrado. Favor primeiro preencher as informações e salvar.";
-                var status = await _statusService.BuscarTodosAsync();
-                Imagem imagem = new Imagem() { URL = "~/images/funcionario/default.png" };
-                FuncionarioViewModel viewModel = new FuncionarioViewModel() { Funcionario = funcionario, Status = status, Imagem = imagem };
-                return View("Criar", viewModel);
+                return BadRequest();
             }
 
-            funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
 
             if(funcionario == null)
             {
                 return BadRequest();
             }
 
-            funcionario.Endereco = new Endereco();
+            if(funcionario.Endereco == null)
+            {
+                funcionario.Endereco = new Endereco();
 
-            try
-            {
-                await _funcionariosService.AtualizarAsync(funcionario);
+                try
+                {
+                    await _funcionariosService.AtualizarAsync(funcionario);
+                }
+                catch (NotFoundException e)
+                {
+                    throw new NotFoundException(e.Message);
+                }
+                catch (DBUpdateConcurrencyException e)
+                {
+                    throw new NotFoundException(e.Message);
+                }
             }
-            catch (NotFoundException e)
-            {
-                throw new NotFoundException(e.Message);
-            }
-            catch (DBUpdateConcurrencyException e)
-            {
-                throw new NotFoundException(e.Message);
-            }
+                            
 
             return RedirectToAction("Editar", "Endereco", funcionario.Endereco);
         }
@@ -192,36 +195,34 @@ namespace SistemaVendasWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(long id, Funcionario funcionario)
+        public async Task<IActionResult> Editar(long? id, Funcionario funcionario, IFormFile imagem)
         {
             if (id != funcionario.Id)
             {
                 return BadRequest();
             }
 
-            if(funcionario.EnderecoId == null)
-            {
-                funcionario.Endereco = new Endereco();
-            }
-            else
-            {
-                funcionario.Endereco = await _enderecoService.BuscarPorIdAsync(funcionario.EnderecoId.Value);
-            }
-            
+            funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+
+            funcionario.Imagem = await _imagemService.ProcessaImagem(funcionario.Imagem, imagem);
+
             try
             {
                 await _funcionariosService.AtualizarAsync(funcionario);
             }
-            catch(NotFoundException e)
+            catch (NotFoundException e)
             {
                 throw new NotFoundException(e.Message);
             }
             catch (DBUpdateConcurrencyException e)
             {
-                throw new NotFoundException(e.Message);
-            }          
-            
-            return RedirectToAction("Editar", "Endereco", funcionario.Endereco);
+                throw new DBUpdateConcurrencyException(e.Message);
+            }
+
+            List<Status> statusLista = await _statusService.BuscarTodosAsync();
+            FuncionarioViewModel funcionarioViewModel = new FuncionarioViewModel() { Funcionario = funcionario, Status = statusLista };
+
+            return View(funcionarioViewModel);
         }
 
         public async Task<IActionResult> Detalhes(long? id)
