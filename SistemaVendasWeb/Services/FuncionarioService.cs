@@ -11,7 +11,7 @@ using SistemaVendasWeb.Models.Enums;
 
 namespace SistemaVendasWeb.Services
 {
-    public class FuncionarioService : IBasicoAsync<Funcionario>
+    public class FuncionarioService : IFuncionarioRepository
     {
         private readonly SistemaVendasWebContext _context;
 
@@ -35,11 +35,10 @@ namespace SistemaVendasWeb.Services
 
         public async Task<Funcionario> BuscarPorIdAsync(long id)
         {
-            Funcionario funcionario = await _context.Funcionarios
-                                                        .Include(f => f.Status)
-                                                        .Include(f => f.Endereco)
-                                                        .Include(f => f.Imagem )
-                                                        .FirstOrDefaultAsync(obj => obj.Id == id);
+            Funcionario funcionario = await _context.Funcionarios.Include(f => f.Status)
+                                                                 .Include(f => f.Endereco)
+                                                                 .Include(f => f.Imagem )
+                                                                 .FirstOrDefaultAsync(obj => obj.Id == id);
             if(funcionario == null)
             {
                 return null;
@@ -57,6 +56,26 @@ namespace SistemaVendasWeb.Services
                                               .Include(f => f.Endereco)
                                               .Include(f => f.Status)
                                               .ToListAsync(); 
+        }
+
+        public async Task ExcluirAsync(long id)
+        {
+            Funcionario funcionario = await _context.Funcionarios.FirstOrDefaultAsync(obj => obj.Id == id);
+            if (funcionario == null)
+            {
+                throw new NotFoundException("Exclir: Funcionario não encontrado!");
+            }
+
+            try
+            {
+                _context.Funcionarios.Remove(funcionario);
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DBUpdateConcurrencyException e)
+            {
+                throw new DBUpdateConcurrencyException(e.Message);
+            }
         }
 
         public async Task<List<Funcionario>> BuscarPorFiltroAsync(Filtros sFiltro, string txtProcurar)
@@ -82,26 +101,5 @@ namespace SistemaVendasWeb.Services
             return await result.Include(obj => obj.Status).ToListAsync();
         }
 
-        public async Task ExcluirAsync(long id)
-        {
-            Funcionario funcionario = await _context.Funcionarios.FirstOrDefaultAsync(obj => obj.Id == id);
-            if(funcionario == null)
-            {
-                throw new NotFoundException("Exclir: Funcionario não encontrado!");
-            }
-
-            try
-            {
-                _context.Funcionarios.Remove(funcionario);
-               
-                await _context.SaveChangesAsync();
-            }
-            catch (DBUpdateConcurrencyException e)
-            {
-                throw new DBUpdateConcurrencyException(e.Message);
-            }
-        }
-
- 
     }
 }

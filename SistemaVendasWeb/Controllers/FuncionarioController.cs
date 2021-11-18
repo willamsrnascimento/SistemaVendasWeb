@@ -8,30 +8,30 @@ using SistemaVendasWeb.Models.ViewModels;
 using System.Threading.Tasks;
 using SistemaVendasWeb.Models.Enums;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using System.Text;
+using SistemaVendasWeb.Repository;
 
 namespace SistemaVendasWeb.Controllers
 {
     public class FuncionarioController : Controller
     {
-        private readonly FuncionarioService _funcionariosService;
+        private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly StatusService _statusService;
-        private readonly EnderecoService _enderecoService;
+        private readonly IEnderecoRepository _enderecoRepository;
         private readonly ImagemService _imagemService;
 
-        public FuncionarioController(FuncionarioService funcionariosService, StatusService statusService, EnderecoService enderecoService, ImagemService imagemService)
+        public FuncionarioController(StatusService statusService, IEnderecoRepository enderecoRepository, ImagemService imagemService, IFuncionarioRepository funcionarioRepository)
         {
-            _funcionariosService = funcionariosService;
             _statusService = statusService;
-            _enderecoService = enderecoService;
+            _enderecoRepository = enderecoRepository;
             _imagemService = imagemService;
+            _funcionarioRepository = funcionarioRepository;
         }
 
         public async Task<IActionResult> Index()
         {
-            List<Funcionario> list = await _funcionariosService.BuscarTodosAsync();
+            
+            List<Funcionario> list = await _funcionarioRepository.BuscarTodosAsync();
             
             if(list == null)
             {
@@ -50,7 +50,7 @@ namespace SistemaVendasWeb.Controllers
 
             if (sFiltro != null && (!String.IsNullOrEmpty(txtProcurar)))
             {
-                list = await _funcionariosService.BuscarPorFiltroAsync(sFiltro.Value, txtProcurar);
+                list = await _funcionarioRepository.BuscarPorFiltroAsync(sFiltro.Value, txtProcurar);
                 
                 if(list.Count == 0)
                 {
@@ -60,7 +60,7 @@ namespace SistemaVendasWeb.Controllers
                 return View(list);
             }
 
-            list = await _funcionariosService.BuscarTodosAsync();
+            list = await _funcionarioRepository.BuscarTodosAsync();
 
             if(list == null)
             {
@@ -73,7 +73,7 @@ namespace SistemaVendasWeb.Controllers
 
         public async Task<FileContentResult> Exportar()
         {
-            List<Funcionario> funcionarios = await _funcionariosService.BuscarTodosAsync();
+            List<Funcionario> funcionarios = await _funcionarioRepository.BuscarTodosAsync();
            
             return GeraCSV(funcionarios);
         }
@@ -115,12 +115,12 @@ namespace SistemaVendasWeb.Controllers
                 if(id != 0 && id != null)
                 {
                     ViewData["informacao"] = "Usuário já cadastrado!";
-                    funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+                    funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
                 }
                 else
                 {
                    funcionario.Imagem = await _imagemService.ProcessaImagem(imagem);
-                   await _funcionariosService.CriarAsync(funcionario);
+                   await _funcionarioRepository.CriarAsync(funcionario);
                    ViewData["informacao"] = "Usuário cadastrado com sucesso.";
                 }                
             }
@@ -144,7 +144,7 @@ namespace SistemaVendasWeb.Controllers
                 return BadRequest();
             }
 
-            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
 
             if(funcionario == null)
             {
@@ -157,7 +157,7 @@ namespace SistemaVendasWeb.Controllers
 
                 try
                 {
-                    await _funcionariosService.AtualizarAsync(funcionario);
+                    await _funcionarioRepository.AtualizarAsync(funcionario);
                 }
                 catch (NotFoundException e)
                 {
@@ -180,7 +180,7 @@ namespace SistemaVendasWeb.Controllers
                 return NotFound();
             }
 
-            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
             List<Status> statusLista = await _statusService.BuscarTodosAsync();
 
             if(funcionario == null)
@@ -202,13 +202,13 @@ namespace SistemaVendasWeb.Controllers
                 return BadRequest();
             }
 
-            funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
 
             funcionario.Imagem = await _imagemService.ProcessaImagem(funcionario.Imagem, imagem);
 
             try
             {
-                await _funcionariosService.AtualizarAsync(funcionario);
+                await _funcionarioRepository.AtualizarAsync(funcionario);
             }
             catch (NotFoundException e)
             {
@@ -232,7 +232,7 @@ namespace SistemaVendasWeb.Controllers
                 return NotFound();
             }
 
-            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
 
             if (funcionario == null)
             {
@@ -249,7 +249,7 @@ namespace SistemaVendasWeb.Controllers
                 return NotFound();
             }
 
-            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
 
             if(funcionario == null)
             {
@@ -268,18 +268,18 @@ namespace SistemaVendasWeb.Controllers
                 return null;
             }
 
-            Funcionario funcionario = await _funcionariosService.BuscarPorIdAsync(id.Value);
+            Funcionario funcionario = await _funcionarioRepository.BuscarPorIdAsync(id.Value);
 
             if(funcionario == null)
             {
                 return null;
             }
             
-            await _funcionariosService.ExcluirAsync(funcionario.Id);
+            await _funcionarioRepository.ExcluirAsync(funcionario.Id);
             
             if(funcionario.EnderecoId != null)
             {
-                await _enderecoService.ExcluirAsync(funcionario.EnderecoId.Value);
+                await _enderecoRepository.ExcluirAsync(funcionario.EnderecoId.Value);
             }
 
             if(funcionario.ImagemId != null)

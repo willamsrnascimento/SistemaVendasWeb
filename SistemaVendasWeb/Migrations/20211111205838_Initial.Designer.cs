@@ -10,8 +10,8 @@ using SistemaVendasWeb.Data;
 namespace SistemaVendasWeb.Migrations
 {
     [DbContext(typeof(SistemaVendasWebContext))]
-    [Migration("20210823181254_Initial20210823")]
-    partial class Initial20210823
+    [Migration("20211111205838_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

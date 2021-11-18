@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SistemaVendasWeb.Repository
 {
-    public interface IBasicoAsync<T>
+    public interface IBasicoAsync<T> where T : class
     {
         Task CriarAsync(T t);
         Task AtualizarAsync(T t);

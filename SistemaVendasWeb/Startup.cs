@@ -9,6 +9,7 @@ using SistemaVendasWeb.Data;
 using SistemaVendasWeb.Services;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
+using SistemaVendasWeb.Repository;
 
 namespace SistemaVendasWeb
 {
@@ -38,12 +39,14 @@ namespace SistemaVendasWeb
             services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddDbContext<SistemaVendasWebContext>(options =>
-                     options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasWebDB")));
+                     options.UseSqlServer(Configuration.GetConnectionString("SistemaVendasDB")));
             //options.UseMySql(Configuration.GetConnectionString("SistemaVendasWebContext"), builder => builder.MigrationsAssembly("SistemaVendasWeb")));
 
 
             services.AddScoped<SeedingService>();
             services.AddScoped<FuncionarioService>();
+            services.AddTransient<IFuncionarioRepository, FuncionarioService>();
+            services.AddTransient<IEnderecoRepository, EnderecoService>();
             services.AddScoped<EnderecoService>();
             services.AddScoped<StatusService>();
             services.AddScoped<ImagemService>();

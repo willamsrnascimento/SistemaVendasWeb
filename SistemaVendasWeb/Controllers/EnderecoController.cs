@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SistemaVendasWeb.Models;
+using SistemaVendasWeb.Repository;
 using SistemaVendasWeb.Services;
 using SistemaVendasWeb.Services.Exception;
 
@@ -9,13 +10,13 @@ namespace SistemaVendasWeb.Controllers
 {
     public class EnderecoController : Controller
     {
-        private readonly EnderecoService _enderecoService;
-        private readonly FuncionarioService _funcionariosService;
+        private readonly IEnderecoRepository _enderecoRepository;
+        private readonly IFuncionarioRepository _funcionarioRepository;
 
-        public EnderecoController(EnderecoService enderecoService, FuncionarioService funcionariosService)
+        public EnderecoController(IEnderecoRepository enderecoRepository, IFuncionarioRepository funcionarioRepository)
         {
-            _enderecoService = enderecoService;
-            _funcionariosService = funcionariosService;
+            _enderecoRepository = enderecoRepository;
+            _funcionarioRepository = funcionarioRepository;
         }
 
         public IActionResult Index()
@@ -23,7 +24,7 @@ namespace SistemaVendasWeb.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Criar(Endereco endereco)
+        public IActionResult Criar(Endereco endereco)
         {
             return View(endereco);
         }
@@ -31,8 +32,8 @@ namespace SistemaVendasWeb.Controllers
         public async Task<IActionResult> CriarEnderecoFuncionario(Funcionario funcionario)
         {
             funcionario.Endereco = new Endereco();
-            await _funcionariosService.AtualizarAsync(funcionario);
-            return await Criar(funcionario.Endereco);
+            await _funcionarioRepository.AtualizarAsync(funcionario);
+            return Criar(funcionario.Endereco);
         }
 
         public async Task<IActionResult> Editar(long? id)
@@ -43,7 +44,7 @@ namespace SistemaVendasWeb.Controllers
                 return NotFound();
             }
 
-            Endereco endereco = await _enderecoService.BuscarPorIdAsync(id.Value);
+            Endereco endereco = await _enderecoRepository.BuscarPorIdAsync(id.Value);
 
             if(endereco == null)
             {
@@ -70,7 +71,7 @@ namespace SistemaVendasWeb.Controllers
 
             try
             {
-               await _enderecoService.AtualizarAsync(endereco);
+               await _enderecoRepository.AtualizarAsync(endereco);
             }
             catch(NotFoundException e)
             {

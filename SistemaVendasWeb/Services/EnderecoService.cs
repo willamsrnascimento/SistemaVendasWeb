@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SistemaVendasWeb.Services
 {
-    public class EnderecoService : IBasicoAsync<Endereco>
+    public class EnderecoService : IEnderecoRepository
     {
         private readonly SistemaVendasWebContext _context;
         public EnderecoService(SistemaVendasWebContext context)

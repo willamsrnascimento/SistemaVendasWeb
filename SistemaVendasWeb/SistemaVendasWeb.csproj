@@ -71,6 +71,8 @@
     <Compile Remove="Migrations\20210823151341_Initial.Designer.cs" />
     <Compile Remove="Migrations\20210823152632_Initial.cs" />
     <Compile Remove="Migrations\20210823152632_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20210823181254_Initial20210823.cs" />
+    <Compile Remove="Migrations\20210823181254_Initial20210823.Designer.cs" />
     <Compile Remove="Models\Interface.cs" />
     <Compile Remove="Repository\IBasico1.cs" />
   </ItemGroup>
